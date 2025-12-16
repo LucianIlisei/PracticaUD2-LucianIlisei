@@ -77,7 +77,7 @@ begin
 end;
 || delimiter ;
 --
-delimiter ||<
+delimiter ||
 create function existeEmailDoctor (f_email varchar(100))
 returns bit
 begin
