@@ -32,15 +32,6 @@ email varchar(100) not null UNIQUE,
 especialidad varchar(20) not null,
 fecha_contratacion date not null,
 id_hospital int not null);
-
-CREATE TABLE if NOT EXISTS citas(
-id_cita int auto_increment primary key,
-id_paciente int not null,
-id_doctor int not null,
-fecha_hora DATETIME not null,
-motivo varchar(200) not null,
-diagnostico varchar(200) not null,
-id_medicamento int not null);
 --
 CREATE TABLE if NOT EXISTS medicamentos(
 id_medicamento int auto_increment primary key,
@@ -49,6 +40,14 @@ descripcion varchar(200) not null,
 tipo varchar(20) not null,
 dosis varchar (50) not null,
 efectos_secundarios varchar(200) not null);
+CREATE TABLE if NOT EXISTS citas(
+id_cita int auto_increment primary key,
+id_paciente int not null,
+id_doctor int not null,
+fecha_hora DATETIME not null,
+motivo varchar(200) not null,
+diagnostico varchar(200) not null,
+id_medicamento int not null);
 --
 alter table pacientes
 add foreign key (id_hospital) references hospitales(id_hospital);
