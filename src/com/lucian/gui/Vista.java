@@ -1,6 +1,7 @@
 package com.lucian.gui;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DateTimePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,37 @@ public class Vista extends JFrame{
     private JButton btnEliminarDoctor;
     private DatePicker fechaContratacionDatePickerDoctor;
     private JTable doctoresTabla;
+    private JTextField campoNombreHospital;
+    private JComboBox comboBoxCiudadHospital;
+    private JTextField campoTelefonoHospital;
+    private JSpinner spinnerCapacidadHospital;
+    private JRadioButton públicoRadioButton;
+    private JRadioButton privadoRadioButton;
+    private JButton btnAñadirHospital;
+    private JButton btnModificarHospital;
+    private JButton btnEliminarHospital;
+    private JTable hospitalesTabla;
+    private JComboBox comboBoxPacienteCita;
+    private JComboBox comboBoxDoctorCita;
+    private JTextField campoMotivoCita;
+    private JComboBox comboBoxMedicamentoCita;
+    private JButton btnAñadirCita;
+    private JButton btnModificarCita;
+    private JButton btnEliminarCita;
+    private JTable table1;
+    private JTextField campoNombreMedicamento;
+    private DateTimePicker fechaHoraCita;
+    private JTextArea campoDiagnosticoCita;
+    private JScrollPane citasTabla;
+    private JTextField textField1;
+    private JComboBox comboBoxTipoMedicamento;
+    private JTextField campoDosisMedicamento;
+    private JTextArea campoEfectosSecundarios;
+    private JButton btnAñadirMedicamento;
+    private JButton btnModificarMedicamento;
+    private JButton btnElimiarMedicamento;
+    private JTable table2;
+    private JScrollPane medicamentosTabla;
 
     public Vista() {
         super(TITULO_FRAME);
