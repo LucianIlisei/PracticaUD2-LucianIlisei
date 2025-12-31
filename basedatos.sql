@@ -5,7 +5,7 @@ USE hospital;
 CREATE TABLE if NOT EXISTS hospitales(
 id_hospital int auto_increment primary key,
 nombre varchar(50) not null,
-ciudad varchar(25) not null,
+provincia varchar(25) not null,
 telefono varchar(9) not null,
 capacidad int not null,
 tipo varchar(10) not null);

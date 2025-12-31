@@ -824,7 +824,7 @@
                   <text value="Eliminar"/>
                 </properties>
               </component>
-              <scrollpane id="98786" binding="citasTabla">
+              <scrollpane id="98786">
                 <constraints>
                   <grid row="14" column="2" row-span="5" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -832,7 +832,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="dea29" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="dea29" class="javax.swing.JTable" binding="citasTabla">
                     <constraints/>
                     <properties/>
                   </component>
@@ -964,7 +964,9 @@
                   </grid>
                   <forms defaultalign-horz="false" defaultalign-vert="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-13265764"/>
+                </properties>
               </component>
               <component id="847da" class="javax.swing.JButton" binding="btnAñadirMedicamento">
                 <constraints>
@@ -993,7 +995,7 @@
                   <text value="Eliminar"/>
                 </properties>
               </component>
-              <scrollpane id="d2080" binding="medicamentosTabla">
+              <scrollpane id="d2080">
                 <constraints>
                   <grid row="10" column="2" row-span="5" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -1001,7 +1003,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="76e03" class="javax.swing.JTable" binding="table2" default-binding="true">
+                  <component id="76e03" class="javax.swing.JTable" binding="medicamentosTabla">
                     <constraints/>
                     <properties/>
                   </component>
