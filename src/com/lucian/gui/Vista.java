@@ -2,8 +2,12 @@ package com.lucian.gui;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DateTimePicker;
+import com.lucian.base.enums.CiudadesHospital;
+import com.lucian.base.enums.EspecialidadDoctor;
+import com.lucian.base.enums.TipoMedicamento;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class Vista extends JFrame{
@@ -27,7 +31,7 @@ public class Vista extends JFrame{
     JRadioButton siRadioButtonFumadorPaciente;
     JRadioButton noRadioButtonFumadorPaciente;
     JComboBox comboBoxHospitalPaciente;
-    JButton bntAñadirPaciente;
+    JButton btnAñadirPaciente;
     JButton btnModificarPaciente;
     JButton btnEliminarPaciente;
     DatePicker fechaNacimientoPacienteDatePicker;
@@ -82,6 +86,13 @@ public class Vista extends JFrame{
     JButton btnElimiarMedicamento;
     JTable medicamentosTabla;
 
+    // Tablas
+    DefaultTableModel dtmPacientes;
+    DefaultTableModel dtmDoctores;
+    DefaultTableModel dtmHospitales;
+    DefaultTableModel dtmCitas;
+    DefaultTableModel dtmMedicamentos;
+
     public Vista() {
         super(TITULO_FRAME);
         initFrame();
@@ -95,5 +106,37 @@ public class Vista extends JFrame{
         this.setSize(new Dimension(this.getWidth()+100,this.getHeight()));
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        setEnumComboBox();
+    }
+
+    private void setEnumComboBox() {
+        for (EspecialidadDoctor constant : EspecialidadDoctor.values()) {
+            comboBoxEspecialidadDoctor.addItem(constant.getValor());
+        }
+
+        for (CiudadesHospital constant: CiudadesHospital.values()) {
+            comboBoxCiudadHospital.addItem(constant.getValor());
+        }
+
+        for (TipoMedicamento constant : TipoMedicamento.values()) {
+            comboBoxTipoMedicamento.addItem(constant.getValor());
+        }
+    }
+
+    private void setTableModels() {
+        this.dtmPacientes = new DefaultTableModel();
+        this.pacientesTabla.setModel(dtmPacientes);
+
+        this.dtmDoctores = new DefaultTableModel();
+        this.doctoresTabla.setModel(dtmDoctores);
+
+        this.dtmHospitales = new DefaultTableModel();
+        this.hospitalesTabla.setModel(dtmHospitales);
+
+        this.dtmCitas = new DefaultTableModel();
+        this.citasTabla.setModel(dtmCitas);
+
+        this.dtmMedicamentos = new DefaultTableModel();
+        this.medicamentosTabla.setModel(dtmMedicamentos);
     }
 }

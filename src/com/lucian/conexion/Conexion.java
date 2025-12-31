@@ -22,12 +22,12 @@ public class Conexion {
 
     private Connection conexion;
 
-    void conectar() {
+    public void conectar() {
         try {
-            conexion = DriverManager.getConnection("jdbc:mysql://"+ip+"3306/hospital",user,password);
+            conexion = DriverManager.getConnection("jdbc:mysql://"+ip+":3306/hospital",user,password);
         } catch (SQLException e) {
             try {
-                conexion = DriverManager.getConnection("jdbc:mysql://"+ip+"3306",user,password);
+                conexion = DriverManager.getConnection("jdbc:mysql://"+ip+":3306",user,password);
                 PreparedStatement statement = null;
 
                 String code = leerFichero();
@@ -48,7 +48,7 @@ public class Conexion {
     private String leerFichero() throws IOException {
         String linea;
         StringBuilder stringBuilder = new StringBuilder();
-        try(BufferedReader reader = new BufferedReader(new FileReader("basedatos.sql"))) {
+        try(BufferedReader reader = new BufferedReader(new FileReader("basedatos_java.sql"))) {
             while((linea = reader.readLine()) != null){
                 stringBuilder.append(linea);
                 stringBuilder.append(" ");
@@ -57,7 +57,7 @@ public class Conexion {
         return stringBuilder.toString();
     }
 
-    void desconectar() {
+    public void desconectar() {
         try {
             conexion.close();
             conexion = null;
@@ -92,7 +92,7 @@ public class Conexion {
             }
     }
 
-    void setPropValues(String ip, String user, String pass, String adminPass) {
+    public void setPropValues(String ip, String user, String pass, String adminPass) {
         try {
             Properties prop = new Properties();
             prop.setProperty("ip", ip);
