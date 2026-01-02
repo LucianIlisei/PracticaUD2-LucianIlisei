@@ -10,9 +10,9 @@ import javax.swing.*;
 
 public class Principal {
     public static void main(String[] args) {
-        Modelo modelo = new Modelo();
-        Vista vista = new Vista();
         Conexion conexion = new Conexion();
+        Modelo modelo = new Modelo(conexion);
+        Vista vista = new Vista();
         Utilidades utilidades = new Utilidades();
         Controlador controlador = new Controlador(modelo, conexion, vista, utilidades);
     }

@@ -2,6 +2,8 @@ package com.lucian.gui;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DateTimePicker;
+import com.lucian.base.entidades.Hospital;
+import com.lucian.base.entidades.Paciente;
 import com.lucian.base.enums.CiudadesHospital;
 import com.lucian.base.enums.EspecialidadDoctor;
 import com.lucian.base.enums.TipoMedicamento;
@@ -53,7 +55,7 @@ public class Vista extends JFrame{
 
     // Hospital
     JTextField campoNombreHospital;
-    JComboBox comboBoxCiudadHospital;
+    JComboBox comboBoxProvinciaHospital;
     JTextField campoTelefonoHospital;
     JSpinner spinnerCapacidadHospital;
     JRadioButton públicoRadioButton;
@@ -115,7 +117,7 @@ public class Vista extends JFrame{
         }
 
         for (CiudadesHospital constant: CiudadesHospital.values()) {
-            comboBoxCiudadHospital.addItem(constant.getValor());
+            comboBoxProvinciaHospital.addItem(constant.getValor());
         }
 
         for (TipoMedicamento constant : TipoMedicamento.values()) {
@@ -138,5 +140,25 @@ public class Vista extends JFrame{
 
         this.dtmMedicamentos = new DefaultTableModel();
         this.medicamentosTabla.setModel(dtmMedicamentos);
+    }
+
+    public Paciente getPacienteFormulario() {
+        Paciente paciente = new Paciente();
+        paciente.setNombre(campoNombreDoctor.getText());
+        paciente.setPrimerApellido(campoPrimerApellidoPaciente.getText());
+        paciente.setSegundoApellido(campoSegundoApellidoPaciente.getText());
+        paciente.setFechaNacimiento(fechaNacimientoPacienteDatePicker.getDate());
+        if (masculinoRadioButtonPaciente.isSelected()) {
+            paciente.setSexo("Masculino");
+        } else if (femeninoRadioButtonPaciente.isSelected()) {
+            paciente.setSexo("Femenino");
+        }
+        paciente.setTelefono(campoTelefonoPaciente.getText());
+        paciente.setEmail(campoEmailPaciente.getText());
+        paciente.setFumador(siRadioButtonFumadorPaciente.isSelected());
+        Hospital h = (Hospital) comboBoxHospitalPaciente.getSelectedItem();
+        int id = h.getIdHospital();
+        paciente.setIdHospital(id);
+        return paciente;
     }
 }

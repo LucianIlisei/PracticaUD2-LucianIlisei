@@ -64,4 +64,10 @@ public class Hospital {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return idHospital + " - " + nombre;
+    }
+
 }

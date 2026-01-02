@@ -15,12 +15,13 @@ public class Conexion {
 
     public Conexion() { getPropValues(); }
 
+    private Connection conexion;
+
     public String getIp() { return ip; }
     public String getUser() { return user; }
     public String getPassword() { return password; }
     public String getAdminPassword() { return adminPassword; }
-
-    private Connection conexion;
+    public Connection getConexion() { return conexion; }
 
     public void conectar() {
         try {
