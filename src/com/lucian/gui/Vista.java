@@ -2,6 +2,7 @@ package com.lucian.gui;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DateTimePicker;
+import com.lucian.base.entidades.Doctor;
 import com.lucian.base.entidades.Hospital;
 import com.lucian.base.entidades.Paciente;
 import com.lucian.base.enums.CiudadesHospital;
@@ -11,6 +12,7 @@ import com.lucian.base.enums.TipoMedicamento;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.Date;
 
 public class Vista extends JFrame{
     private JPanel panel1;
@@ -144,6 +146,7 @@ public class Vista extends JFrame{
 
     public Paciente getPacienteFormulario() {
         Paciente paciente = new Paciente();
+
         paciente.setNombre(campoNombreDoctor.getText());
         paciente.setPrimerApellido(campoPrimerApellidoPaciente.getText());
         paciente.setSegundoApellido(campoSegundoApellidoPaciente.getText());
@@ -163,7 +166,6 @@ public class Vista extends JFrame{
     }
 
     public Paciente getPacienteFormulario(int idPaciente) {
-
         Paciente paciente = new Paciente();
 
         paciente.setIdPaciente(idPaciente);
@@ -171,20 +173,34 @@ public class Vista extends JFrame{
         paciente.setPrimerApellido(campoPrimerApellidoPaciente.getText());
         paciente.setSegundoApellido(campoSegundoApellidoPaciente.getText());
         paciente.setFechaNacimiento(fechaNacimientoPacienteDatePicker.getDate());
-
         if (masculinoRadioButtonPaciente.isSelected()) {
             paciente.setSexo("Masculino");
         } else if (femeninoRadioButtonPaciente.isSelected()) {
             paciente.setSexo("Femenino");
         }
-
         paciente.setTelefono(campoTelefonoPaciente.getText());
         paciente.setEmail(campoEmailPaciente.getText());
         paciente.setFumador(siRadioButtonFumadorPaciente.isSelected());
-
         Hospital h = (Hospital) comboBoxHospitalPaciente.getSelectedItem();
         paciente.setIdHospital(h.getIdHospital());
 
         return paciente;
+    }
+
+    public Doctor getDoctorFormulario() {
+        Doctor doctor = new Doctor();
+
+        doctor.setNombre(campoNombreDoctor.getText());
+        doctor.setPrimerApellido(campoPrimerApellidoDoctor.getText());
+        doctor.setSegundoApellido(campoSegundoApellidoDoctor.getText());
+        doctor.setTelefono(campoTelefonoDoctor.getText());
+        doctor.setEmail(campoEmailDoctor.getText());
+        doctor.setEspecialidad(comboBoxEspecialidadDoctor.getSelectedItem().toString());
+        doctor.setFechaContratacion(fechaContratacionDatePickerDoctor.getDate());
+        Hospital h = (Hospital) comboBoxHospitalPaciente.getSelectedItem();
+        int id = h.getIdHospital();
+        doctor.setIdHospital(id);
+
+        return doctor;
     }
 }

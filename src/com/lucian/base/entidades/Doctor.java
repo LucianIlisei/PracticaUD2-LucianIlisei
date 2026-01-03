@@ -25,6 +25,10 @@ public class Doctor {
         this.idHospital = idHospital;
     }
 
+    public Doctor() {
+
+    }
+
     public int getIdDoctor() {
         return idDoctor;
     }
