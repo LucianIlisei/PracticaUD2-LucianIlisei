@@ -14,6 +14,7 @@ public class Modelo {
     public Modelo(Conexion conexion) {
         this.conexion = conexion;
     }
+
     void insertarPaciente(Paciente paciente) {
         String sentenciaSql = "INSERT INTO pacientes (nombre, primer_apellido, segundo_apellido, fecha_nacimiento, sexo, telefono, email, fumador, id_hospital) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement sentencia = null;
@@ -42,5 +43,13 @@ public class Modelo {
                 }
             }
         }
+    }
+
+    void modificarPaciente(Paciente pacienteModificado) {
+        String sentenciaSql = "UPDATE pacientes SET nombre =?, primer_apellido =?, segundo_apellido =?, " +
+                "fecha_nacimiento =?, sexo =?, telefono =?, email =?, fumador =?, id_hospital =? WHERE id_paciente =?";
+
+        PreparedStatement sentencia = null;
+        Paciente p =
     }
 }

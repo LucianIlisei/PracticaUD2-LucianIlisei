@@ -161,4 +161,30 @@ public class Vista extends JFrame{
         paciente.setIdHospital(id);
         return paciente;
     }
+
+    public Paciente getPacienteFormulario(int idPaciente) {
+
+        Paciente paciente = new Paciente();
+
+        paciente.setIdPaciente(idPaciente);
+        paciente.setNombre(campoNombrePaciente.getText());
+        paciente.setPrimerApellido(campoPrimerApellidoPaciente.getText());
+        paciente.setSegundoApellido(campoSegundoApellidoPaciente.getText());
+        paciente.setFechaNacimiento(fechaNacimientoPacienteDatePicker.getDate());
+
+        if (masculinoRadioButtonPaciente.isSelected()) {
+            paciente.setSexo("Masculino");
+        } else if (femeninoRadioButtonPaciente.isSelected()) {
+            paciente.setSexo("Femenino");
+        }
+
+        paciente.setTelefono(campoTelefonoPaciente.getText());
+        paciente.setEmail(campoEmailPaciente.getText());
+        paciente.setFumador(siRadioButtonFumadorPaciente.isSelected());
+
+        Hospital h = (Hospital) comboBoxHospitalPaciente.getSelectedItem();
+        paciente.setIdHospital(h.getIdHospital());
+
+        return paciente;
+    }
 }
