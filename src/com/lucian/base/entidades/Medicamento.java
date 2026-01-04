@@ -17,6 +17,10 @@ public class Medicamento {
         this.efectosSecundarios = efectosSecundarios;
     }
 
+    public Medicamento() {
+
+    }
+
     public int getIdMedicamento() {
         return idMedicamento;
     }

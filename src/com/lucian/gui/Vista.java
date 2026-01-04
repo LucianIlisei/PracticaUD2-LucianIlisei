@@ -2,9 +2,7 @@ package com.lucian.gui;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DateTimePicker;
-import com.lucian.base.entidades.Doctor;
-import com.lucian.base.entidades.Hospital;
-import com.lucian.base.entidades.Paciente;
+import com.lucian.base.entidades.*;
 import com.lucian.base.enums.CiudadesHospital;
 import com.lucian.base.enums.EspecialidadDoctor;
 import com.lucian.base.enums.TipoMedicamento;
@@ -60,7 +58,7 @@ public class Vista extends JFrame{
     JComboBox comboBoxProvinciaHospital;
     JTextField campoTelefonoHospital;
     JSpinner spinnerCapacidadHospital;
-    JRadioButton públicoRadioButton;
+    JRadioButton publicoRadioButton;
     JRadioButton privadoRadioButton;
     JButton btnAñadirHospital;
     JButton btnModificarHospital;
@@ -81,7 +79,7 @@ public class Vista extends JFrame{
     JTextField campoNombreMedicamento;
     DateTimePicker fechaHoraCita;
     JTextArea campoDiagnosticoCita;
-    JTextField textField1;
+    JTextField campoDescripción;
     JComboBox comboBoxTipoMedicamento;
     JTextField campoDosisMedicamento;
     JTextArea campoEfectosSecundarios;
@@ -197,10 +195,116 @@ public class Vista extends JFrame{
         doctor.setEmail(campoEmailDoctor.getText());
         doctor.setEspecialidad(comboBoxEspecialidadDoctor.getSelectedItem().toString());
         doctor.setFechaContratacion(fechaContratacionDatePickerDoctor.getDate());
-        Hospital h = (Hospital) comboBoxHospitalPaciente.getSelectedItem();
+        Hospital h = (Hospital) comboBoxHospitalDoctor.getSelectedItem();
         int id = h.getIdHospital();
         doctor.setIdHospital(id);
 
         return doctor;
+    }
+    public Doctor getDoctorFormulario(int idDoctor) {
+        Doctor doctor = new Doctor();
+
+        doctor.setIdDoctor(idDoctor);
+        doctor.setNombre(campoNombreDoctor.getText());
+        doctor.setPrimerApellido(campoPrimerApellidoDoctor.getText());
+        doctor.setSegundoApellido(campoSegundoApellidoDoctor.getText());
+        doctor.setTelefono(campoTelefonoDoctor.getText());
+        doctor.setEmail(campoEmailDoctor.getText());
+        doctor.setEspecialidad(comboBoxEspecialidadDoctor.getSelectedItem().toString());
+        doctor.setFechaContratacion(fechaContratacionDatePickerDoctor.getDate());
+        Hospital h = (Hospital) comboBoxHospitalDoctor.getSelectedItem();
+        int id = h.getIdHospital();
+        doctor.setIdHospital(id);
+
+        return doctor;
+    }
+
+    public Hospital getHospitalFormulario() {
+        Hospital hospital = new Hospital();
+
+        hospital.setNombre(campoNombreHospital.getText());
+        hospital.setProvincia(comboBoxProvinciaHospital.getSelectedItem().toString());
+        hospital.setTelefono(campoTelefonoHospital.getText());
+        hospital.setCapacidad(Integer.parseInt(spinnerCapacidadHospital.getValue().toString()));
+        if (privadoRadioButton.isSelected()) {
+            hospital.setTipo("Privado");
+        } else if (publicoRadioButton.isSelected()) {
+            hospital.setTipo("Publico");
+        }
+        return hospital;
+    }
+
+    public Hospital getHospitalFormulario(int id) {
+        Hospital hospital = new Hospital();
+
+        hospital.setIdHospital(id);
+        hospital.setNombre(campoNombreHospital.getText());
+        hospital.setProvincia(comboBoxProvinciaHospital.getSelectedItem().toString());
+        hospital.setTelefono(campoTelefonoHospital.getText());
+        hospital.setCapacidad(Integer.parseInt(spinnerCapacidadHospital.getValue().toString()));
+        if (privadoRadioButton.isSelected()) {
+            hospital.setTipo("Privado");
+        } else if (publicoRadioButton.isSelected()) {
+            hospital.setTipo("Publico");
+        }
+        return hospital;
+    }
+
+    public Cita getCitaFormulario() {
+        Cita cita = new Cita();
+
+        Paciente p = (Paciente) comboBoxPacienteCita.getSelectedItem();
+        cita.setIdPaciente(p.getIdPaciente());
+        Doctor d = (Doctor) comboBoxDoctorCita.getSelectedItem();
+        cita.setIdDoctor(d.getIdDoctor());
+        cita.setFechaHora(fechaHoraCita.getDateTimeStrict());
+        cita.setMotivo(campoMotivoCita.getText());
+        cita.setDiagnostico(campoDiagnosticoCita.getText());
+        Medicamento m = (Medicamento) comboBoxMedicamentoCita.getSelectedItem();
+        cita.setIdMedicamento(m.getIdMedicamento());
+
+        return cita;
+    }
+
+    public Cita getCitaFormulario(int id) {
+        Cita cita = new Cita();
+
+        cita.setIdCita(id);
+        Paciente p = (Paciente) comboBoxPacienteCita.getSelectedItem();
+        cita.setIdPaciente(p.getIdPaciente());
+        Doctor d = (Doctor) comboBoxDoctorCita.getSelectedItem();
+        cita.setIdDoctor(d.getIdDoctor());
+        cita.setFechaHora(fechaHoraCita.getDateTimeStrict());
+        cita.setMotivo(campoMotivoCita.getText());
+        cita.setDiagnostico(campoDiagnosticoCita.getText());
+        Medicamento m = (Medicamento) comboBoxMedicamentoCita.getSelectedItem();
+        cita.setIdMedicamento(m.getIdMedicamento());
+
+        return cita;
+    }
+
+    public Medicamento getMedicamentoFormulario() {
+        Medicamento medicamento = new Medicamento();
+
+        medicamento.setNombre(campoNombreMedicamento.getText());
+        medicamento.setDescripcion(campoDescripción.getText());
+        medicamento.setTipo(comboBoxTipoMedicamento.getSelectedItem().toString());
+        medicamento.setDosis(campoDosisMedicamento.getText());
+        medicamento.setEfectosSecundarios(campoEfectosSecundarios.getText());
+
+        return medicamento;
+    }
+
+    public Medicamento getMedicamentoFormulario(int id) {
+        Medicamento medicamento = new Medicamento();
+
+        medicamento.setIdMedicamento(id);
+        medicamento.setNombre(campoNombreMedicamento.getText());
+        medicamento.setDescripcion(campoDescripción.getText());
+        medicamento.setTipo(comboBoxTipoMedicamento.getSelectedItem().toString());
+        medicamento.setDosis(campoDosisMedicamento.getText());
+        medicamento.setEfectosSecundarios(campoEfectosSecundarios.getText());
+
+        return medicamento;
     }
 }

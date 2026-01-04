@@ -6,7 +6,7 @@
     <colspec value="left:4dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="822" height="575"/>
+      <xy x="20" y="20" width="847" height="575"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -612,7 +612,7 @@
                   <text value="Tipo"/>
                 </properties>
               </component>
-              <component id="c4844" class="javax.swing.JRadioButton" binding="públicoRadioButton" default-binding="true">
+              <component id="c4844" class="javax.swing.JRadioButton" binding="publicoRadioButton">
                 <constraints>
                   <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -921,7 +921,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="a7010" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="a7010" class="javax.swing.JTextField" binding="campoDescripción">
                 <constraints>
                   <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>

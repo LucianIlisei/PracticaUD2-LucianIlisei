@@ -17,6 +17,10 @@ public class Hospital {
         this.tipo = tipo;
     }
 
+    public Hospital () {
+
+    }
+
     public int getIdHospital() {
         return idHospital;
     }

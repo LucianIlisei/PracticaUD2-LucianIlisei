@@ -21,6 +21,10 @@ public class Cita {
         this.idMedicamento = idMedicamento;
     }
 
+    public Cita () {
+
+    }
+
     public int getIdCita() {
         return idCita;
     }
