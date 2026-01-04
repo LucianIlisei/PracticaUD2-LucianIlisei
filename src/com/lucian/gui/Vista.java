@@ -11,10 +11,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Vista extends JFrame{
     private JPanel panel1;
-    private JTabbedPane tabbedPane1;
+    public JTabbedPane tabbedPane1;
     private final static String TITULO_FRAME="Aplicacion hospital";
 
     // Paciente
@@ -109,19 +111,20 @@ public class Vista extends JFrame{
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         setEnumComboBox();
+        setTableModels();
     }
 
     private void setEnumComboBox() {
         for (EspecialidadDoctor constant : EspecialidadDoctor.values()) {
-            comboBoxEspecialidadDoctor.addItem(constant.getValor());
-        }
+                comboBoxEspecialidadDoctor.addItem(constant.getValor());
+            }
 
-        for (CiudadesHospital constant: CiudadesHospital.values()) {
-            comboBoxProvinciaHospital.addItem(constant.getValor());
-        }
+            for (CiudadesHospital constant: CiudadesHospital.values()) {
+                comboBoxProvinciaHospital.addItem(constant.getValor());
+            }
 
-        for (TipoMedicamento constant : TipoMedicamento.values()) {
-            comboBoxTipoMedicamento.addItem(constant.getValor());
+            for (TipoMedicamento constant : TipoMedicamento.values()) {
+                comboBoxTipoMedicamento.addItem(constant.getValor());
         }
     }
 
@@ -145,7 +148,7 @@ public class Vista extends JFrame{
     public Paciente getPacienteFormulario() {
         Paciente paciente = new Paciente();
 
-        paciente.setNombre(campoNombreDoctor.getText());
+        paciente.setNombre(campoNombrePaciente.getText());
         paciente.setPrimerApellido(campoPrimerApellidoPaciente.getText());
         paciente.setSegundoApellido(campoSegundoApellidoPaciente.getText());
         paciente.setFechaNacimiento(fechaNacimientoPacienteDatePicker.getDate());

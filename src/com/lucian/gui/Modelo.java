@@ -4,10 +4,7 @@ import com.lucian.base.entidades.*;
 import com.lucian.conexion.Conexion;
 import com.lucian.utilidades.Utilidades;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class Modelo {
 
@@ -32,6 +29,7 @@ public class Modelo {
             sentencia.setString(7, paciente.getEmail());
             sentencia.setBoolean(8, paciente.isFumador());
             sentencia.setInt(9, paciente.getIdHospital());
+            System.out.println("ID hospital seleccionado: " + paciente.getIdHospital());
             sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -432,4 +430,95 @@ public class Modelo {
             }
         }
     }
+
+    ResultSet consultarPaciente() throws SQLException {
+        String sentenciaSql = "SELECT id_paciente AS 'ID', " +
+                        "nombre AS 'Nombre', " +
+                        "primer_apellido AS '1º Apellido', " +
+                        "segundo_apellido AS '2º Apellido', " +
+                        "fecha_nacimiento AS 'Fecha de nacimiento', " +
+                        "sexo AS 'Sexo', " +
+                        "telefono AS 'Teléfono', " +
+                        "email AS 'Email', " +
+                        "fumador AS 'Fumador', " +
+                        "id_hospital AS 'Hospital' " +
+                        "FROM pacientes";
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+        resultado = sentencia.executeQuery();
+        return resultado;
+    }
+
+
+    ResultSet consultarDoctor() throws SQLException {
+        String sentenciaSql = "SELECT id_doctor AS 'ID', " +
+                        "nombre AS 'Nombre', " +
+                        "primer_apellido AS '1º Apellido', " +
+                        "segundo_apellido AS '2º Apellido', " +
+                        "telefono AS 'Teléfono', " +
+                        "email AS 'Email', " +
+                        "especialidad AS 'Especialidad', " +
+                        "fecha_contratacion AS 'Fecha contratación', " +
+                        "id_hospital AS 'Hospital' " +
+                        "FROM doctores";
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+        resultado = sentencia.executeQuery();
+        return resultado;
+    }
+
+    ResultSet consultarHospital() throws SQLException {
+        String sentenciaSql = "SELECT id_hospital AS 'ID', " +
+                        "nombre AS 'Nombre', " +
+                        "provincia AS 'Provincia', " +
+                        "telefono AS 'Teléfono', " +
+                        "capacidad AS 'Capacidad', " +
+                        "tipo AS 'Tipo' " +
+                        "FROM hospitales";
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+        resultado = sentencia.executeQuery();
+        return resultado;
+    }
+
+    ResultSet consultarCita() throws SQLException {
+        String sentenciaSql =
+                "SELECT id_cita AS 'ID', " +
+                        "id_paciente AS 'Paciente', " +
+                        "id_doctor AS 'Doctor', " +
+                        "fecha_hora AS 'Fecha y hora', " +
+                        "motivo AS 'Motivo', " +
+                        "diagnostico AS 'Diagnóstico', " +
+                        "id_medicamento AS 'Medicamento' " +
+                        "FROM citas";
+
+        PreparedStatement sentencia;
+        ResultSet resultado;
+
+        sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+        resultado = sentencia.executeQuery();
+
+        return resultado;
+    }
+
+
+    ResultSet consultarMedicamento() throws SQLException {
+        String sentenciaSql = "SELECT id_medicamento AS 'ID', " +
+                        "nombre AS 'Nombre', " +
+                        "descripcion AS 'Descripción', " +
+                        "tipo AS 'Tipo', " +
+                        "dosis AS 'Dosis', " +
+                        "efectos_secundarios AS 'Efectos secundarios' " +
+                        "FROM medicamentos";
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+        resultado = sentencia.executeQuery();
+        return resultado;
+    }
+
+
 }

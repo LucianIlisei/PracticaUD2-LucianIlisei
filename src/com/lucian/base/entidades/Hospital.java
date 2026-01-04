@@ -71,7 +71,7 @@ public class Hospital {
 
     @Override
     public String toString() {
-        return idHospital + " - " + nombre;
+        return nombre;
     }
 
 }
