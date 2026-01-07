@@ -73,5 +73,13 @@ public class Utilidades {
         JOptionPane.showMessageDialog(null, "La fecha debe ser anterior a la fecha actual");
     }
 
+    public boolean hayFilaseleccionada(JTable tabla) {
+        return tabla.getSelectedRow() != -1;
+    }
+
+    public void hayFilaSeleccionadaAlerta() {
+        JOptionPane.showMessageDialog(null, "No se puede añadir si hay una fila seleccionada, por favor deseleccione la tabla modificando, eliminando o cambiando de pestaña");
+    }
+
 
 }

@@ -325,6 +325,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 conexion.desconectar();
                 break;
             case "añadirPaciente":
+                if(utilidades.hayFilaseleccionada(vista.pacientesTabla)) {
+                    utilidades.hayFilaSeleccionadaAlerta();
+                    break;
+                }
                 if (utilidades.campoVacio(vista.campoNombrePaciente)) {
                     utilidades.campoVacioAlerta(vista.campoNombrePaciente);
                     break;
@@ -412,7 +416,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                 break;
             case "añadirDoctor":
-
+                if(utilidades.hayFilaseleccionada(vista.doctoresTabla)) {
+                    utilidades.hayFilaSeleccionadaAlerta();
+                    break;
+                }
                 if (utilidades.campoVacio(vista.campoNombreDoctor)) {
                     utilidades.campoVacioAlerta(vista.campoNombreDoctor);
                     break;
@@ -499,6 +506,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                 break;
             case "añadirHospital":
+                if(utilidades.hayFilaseleccionada(vista.hospitalesTabla)) {
+                    utilidades.hayFilaSeleccionadaAlerta();
+                    break;
+                }
                 if (utilidades.campoVacio(vista.campoNombreHospital)) {
                     utilidades.campoVacioAlerta(vista.campoNombreHospital);
                     break;
@@ -562,6 +573,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                 break;
             case "añadirCita":
+                if(utilidades.hayFilaseleccionada(vista.citasTabla)) {
+                    utilidades.hayFilaSeleccionadaAlerta();
+                    break;
+                }
                 if (utilidades.campoVacio(vista.campoMotivoCita)) {
                     utilidades.campoVacioAlerta(vista.campoMotivoCita);
                     break;
@@ -605,15 +620,17 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     break;
                 }
                 int filaCitaEliminar = vista.citasTabla.getSelectedRow();
-                int idCitaEliminar = Integer.parseInt(
-                        vista.citasTabla.getValueAt(filaCitaEliminar, 0).toString()
-                );
+                int idCitaEliminar = Integer.parseInt(vista.citasTabla.getValueAt(filaCitaEliminar, 0).toString());
                 modelo.eliminarCita(idCitaEliminar);
 
                 refrescarTabla(3);
                 borrarCamposCitas();
                 break;
             case "añadirMedicamento":
+                if(utilidades.hayFilaseleccionada(vista.medicamentosTabla)) {
+                    utilidades.hayFilaSeleccionadaAlerta();
+                    break;
+                }
                 if (utilidades.campoVacio(vista.campoNombreMedicamento)) {
                     utilidades.campoVacioAlerta(vista.campoNombreMedicamento);
                     break;
