@@ -583,7 +583,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="NOMBRE"/>
+                </properties>
               </component>
               <component id="58d42" class="javax.swing.JLabel">
                 <constraints>

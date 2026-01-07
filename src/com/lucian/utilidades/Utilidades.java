@@ -80,6 +80,4 @@ public class Utilidades {
     public void hayFilaSeleccionadaAlerta() {
         JOptionPane.showMessageDialog(null, "No se puede añadir si hay una fila seleccionada, por favor deseleccione la tabla modificando, eliminando o cambiando de pestaña");
     }
-
-
 }

@@ -587,6 +587,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     modelo.insertarCita(vista.getCitaFormulario());
                     refrescarTabla(3);
                     borrarCamposCitas();
+                    cargarCombos();
                 }
                 break;
             case "modificarCita":
@@ -608,6 +609,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                     refrescarTabla(3);
                     borrarCamposCitas();
+                    cargarCombos();
                 }
                 break;
             case "eliminarCita":
@@ -625,6 +627,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                 refrescarTabla(3);
                 borrarCamposCitas();
+                cargarCombos();
                 break;
             case "añadirMedicamento":
                 if(utilidades.hayFilaseleccionada(vista.medicamentosTabla)) {
@@ -648,6 +651,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                     refrescarTabla(4);
                     borrarCamposMedicamentos();
+                    cargarCombos();
                 }
                 break;
             case "modificarMedicamento":
@@ -674,6 +678,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                     refrescarTabla(4);
                     borrarCamposMedicamentos();
+                    cargarCombos();
                 }
                 break;
             case "eliminarMedicamento":
@@ -693,6 +698,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
                 refrescarTabla(4);
                 borrarCamposMedicamentos();
+                cargarCombos();
                 break;
         }
     }

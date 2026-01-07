@@ -57,9 +57,7 @@ public class Cita {
         this.fechaHora = fechaHora;
     }
 
-    public String getMotivo() {
-        return motivo;
-    }
+    public String getMotivo() { return motivo; }
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
