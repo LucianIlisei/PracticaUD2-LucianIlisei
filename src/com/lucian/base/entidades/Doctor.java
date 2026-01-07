@@ -100,4 +100,10 @@ public class Doctor {
     public void setIdHospital(int idHospital) {
         this.idHospital = idHospital;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " " + primerApellido;
+    }
+
 }

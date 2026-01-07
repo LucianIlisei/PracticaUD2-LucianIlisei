@@ -450,7 +450,6 @@ public class Modelo {
         return resultado;
     }
 
-
     ResultSet consultarDoctor() throws SQLException {
         String sentenciaSql = "SELECT id_doctor AS 'ID', " +
                         "nombre AS 'Nombre', " +
@@ -497,13 +496,10 @@ public class Modelo {
 
         PreparedStatement sentencia;
         ResultSet resultado;
-
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
         resultado = sentencia.executeQuery();
-
         return resultado;
     }
-
 
     ResultSet consultarMedicamento() throws SQLException {
         String sentenciaSql = "SELECT id_medicamento AS 'ID', " +
@@ -518,6 +514,30 @@ public class Modelo {
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
         resultado = sentencia.executeQuery();
         return resultado;
+    }
+
+    public ResultSet consultarHospitalesCombo() throws SQLException {
+        String sql = "SELECT id_hospital, nombre FROM hospitales";
+        PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
+        return ps.executeQuery();
+    }
+
+    public ResultSet consultarPacientesCombo() throws SQLException {
+        String sql = "SELECT id_paciente, nombre, primer_apellido FROM pacientes";
+        PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
+        return ps.executeQuery();
+    }
+
+    public ResultSet consultarDoctoresCombo() throws SQLException {
+        String sql = "SELECT id_doctor, nombre, primer_apellido FROM doctores";
+        PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
+        return ps.executeQuery();
+    }
+
+    public ResultSet consultarMedicamentosCombo() throws SQLException {
+        String sql = "SELECT id_medicamento, nombre FROM medicamentos";
+        PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
+        return ps.executeQuery();
     }
 
 

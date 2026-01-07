@@ -18,7 +18,9 @@
           </grid>
           <forms/>
         </constraints>
-        <properties/>
+        <properties>
+          <name value="NOMBRE"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="6fc07" binding="PanelPaciente" layout-manager="FormLayout">
@@ -66,15 +68,6 @@
                   <text value="Nombre"/>
                 </properties>
               </component>
-              <component id="ec95e" class="javax.swing.JTextField" binding="campoNombrePaciente">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <forms defaultalign-horz="false"/>
-                </constraints>
-                <properties/>
-              </component>
               <component id="518de" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -93,7 +86,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="PRIMER APELLIDO"/>
+                </properties>
               </component>
               <component id="9238d" class="javax.swing.JLabel">
                 <constraints>
@@ -113,7 +108,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="SEGUNDO APELLIDO"/>
+                </properties>
               </component>
               <component id="20661" class="javax.swing.JLabel">
                 <constraints>
@@ -131,7 +128,9 @@
                   <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="FECHA DE NACIMIENTO"/>
+                </properties>
               </component>
               <component id="b7aa9" class="javax.swing.JLabel">
                 <constraints>
@@ -173,7 +172,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="TELÉFONO"/>
+                </properties>
               </component>
               <component id="97714" class="javax.swing.JRadioButton" binding="femeninoRadioButtonPaciente">
                 <constraints>
@@ -200,7 +201,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="EMAIL"/>
+                </properties>
               </component>
               <component id="63233" class="javax.swing.JLabel">
                 <constraints>
@@ -238,7 +241,9 @@
                   <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="HOSPITAL"/>
+                </properties>
               </component>
               <component id="11c1e" class="javax.swing.JButton" binding="btnAñadirPaciente">
                 <constraints>
@@ -292,6 +297,17 @@
                   <text value="Eliminar"/>
                 </properties>
               </component>
+              <component id="ec95e" class="javax.swing.JTextField" binding="campoNombrePaciente">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties>
+                  <name value="NOMBRE"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="fd07b" binding="PanelDoctor" layout-manager="FormLayout">
@@ -343,7 +359,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="NOMBRE"/>
+                </properties>
               </component>
               <component id="fa18e" class="javax.swing.JLabel">
                 <constraints>
@@ -370,7 +388,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="SEGUNDO APELLIDO"/>
+                </properties>
               </component>
               <component id="6415a" class="javax.swing.JLabel">
                 <constraints>
@@ -388,7 +408,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="TELÉFONO"/>
+                </properties>
               </component>
               <component id="61537" class="javax.swing.JLabel">
                 <constraints>
@@ -406,7 +428,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="EMAIL"/>
+                </properties>
               </component>
               <component id="ea85e" class="javax.swing.JLabel">
                 <constraints>
@@ -422,7 +446,9 @@
                   <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="ESPECIALIDAD"/>
+                </properties>
               </component>
               <component id="f85e7" class="javax.swing.JLabel">
                 <constraints>
@@ -438,7 +464,9 @@
                   <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="FECHA DE CONTRATACIÓN"/>
+                </properties>
               </component>
               <component id="ed8cf" class="javax.swing.JLabel">
                 <constraints>
@@ -454,7 +482,9 @@
                   <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="HOSPITAL"/>
+                </properties>
               </component>
               <component id="df1a3" class="javax.swing.JButton" binding="btnAñadirDoctor">
                 <constraints>
@@ -504,7 +534,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="PRIMER APELLIDO"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -567,7 +599,9 @@
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="PROVINCIA"/>
+                </properties>
               </component>
               <component id="f6fbc" class="javax.swing.JLabel">
                 <constraints>
@@ -585,7 +619,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="TELÉFONO"/>
+                </properties>
               </component>
               <component id="c4992" class="javax.swing.JLabel">
                 <constraints>
@@ -601,7 +637,9 @@
                   <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="CAPACIDAD"/>
+                </properties>
               </component>
               <component id="a412e" class="javax.swing.JLabel">
                 <constraints>
@@ -720,7 +758,9 @@
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="PACIENTE"/>
+                </properties>
               </component>
               <component id="1228a" class="javax.swing.JLabel">
                 <constraints>
@@ -736,7 +776,9 @@
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="DOCTOR"/>
+                </properties>
               </component>
               <component id="36af8" class="javax.swing.JLabel">
                 <constraints>
@@ -752,7 +794,9 @@
                   <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="FECHA Y HORA"/>
+                </properties>
               </component>
               <component id="388e6" class="javax.swing.JLabel">
                 <constraints>
@@ -770,7 +814,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="MOTIVO"/>
+                </properties>
               </component>
               <component id="37be4" class="javax.swing.JLabel">
                 <constraints>
@@ -846,6 +892,7 @@
                   <forms defaultalign-horz="false" defaultalign-vert="false"/>
                 </constraints>
                 <properties>
+                  <name value="DIAGNÓSTICO"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -894,7 +941,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="NOMBRE"/>
+                </properties>
               </component>
               <component id="f0636" class="javax.swing.JLabel">
                 <constraints>
@@ -919,7 +968,9 @@
                   <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="TIPO"/>
+                </properties>
               </component>
               <component id="a7010" class="javax.swing.JTextField" binding="campoDescripción">
                 <constraints>
@@ -928,7 +979,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="DESCRIPCIÓN"/>
+                </properties>
               </component>
               <component id="9485c" class="javax.swing.JLabel">
                 <constraints>
@@ -946,7 +999,9 @@
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <name value="DOSIS"/>
+                </properties>
               </component>
               <component id="34824" class="javax.swing.JLabel">
                 <constraints>
@@ -966,6 +1021,7 @@
                 </constraints>
                 <properties>
                   <background color="-13265764"/>
+                  <name value="EFECTOS SECUNDARIOS"/>
                 </properties>
               </component>
               <component id="847da" class="javax.swing.JButton" binding="btnAñadirMedicamento">

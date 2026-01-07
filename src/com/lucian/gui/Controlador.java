@@ -32,20 +32,13 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         conexion.conectar();
         addActionListeners(this);
 
-        try {
-            vista.pacientesTabla.setModel(
-                    construirTableModel(modelo.consultarPaciente())
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         vista.tabbedPane1.addChangeListener(e -> {
             int index = vista.tabbedPane1.getSelectedIndex();
             refrescarTabla(index);
         });
 
         refrescarTodo();
+        cargarCombos();
         iniciar();
     }
 
@@ -55,6 +48,17 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
             refrescarTabla(i);
         }
         refrescar = false;
+    }
+
+    public void cargarCombos() {
+        try {
+            vista.cargarHospitalesCombo(modelo.consultarHospitalesCombo());
+            vista.cargarPacientesCombo(modelo.consultarPacientesCombo());
+            vista.cargarDoctoresCombo(modelo.consultarDoctoresCombo());
+            vista.cargarMedicamentosCombo(modelo.consultarMedicamentosCombo());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addActionListeners(ActionListener listener) {
@@ -97,6 +101,13 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
 
     void iniciar() {
+        try {
+            vista.pacientesTabla.setModel(
+                    construirTableModel(modelo.consultarPaciente())
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         vista.pacientesTabla.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = vista.pacientesTabla.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -308,15 +319,364 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        int confirmacion = 0;
         switch (command) {
             case "desconectar":
                 conexion.desconectar();
                 break;
-
             case "añadirPaciente":
-                if(utilidades.campoVacio(vista.campoNombrePaciente)) {
-                    utilidades.campoVacio(vista.campoNombrePaciente);
+                if (utilidades.campoVacio(vista.campoNombrePaciente)) {
+                    utilidades.campoVacioAlerta(vista.campoNombrePaciente);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoPrimerApellidoPaciente)) {
+                    utilidades.campoVacioAlerta(vista.campoPrimerApellidoPaciente);
+                    break;
+                } else if(utilidades.fechaVacia(vista.fechaNacimientoPacienteDatePicker)) {
+                    utilidades.fechaVaciaAlerta();
+                    break;
+                } else if(!utilidades.fechaAnteriorAHoy(vista.fechaNacimientoPacienteDatePicker)) {
+                    utilidades.fechaAnteriorHoy();
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoPaciente)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else if (!utilidades.emailValido(vista.campoEmailPaciente)) {
+                    utilidades.emailErrorAlerta();
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxHospitalPaciente)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxHospitalPaciente);
+                    break;
+                } else {
+                    Paciente paciente = vista.getPacienteFormulario();
+                    modelo.insertarPaciente(paciente);
+                    refrescarTabla(0);
+                    borrarCamposPacientes();
+                    cargarCombos();
                 }
+                break;
+            case "modificarPaciente":
+                if (utilidades.noHayFilaSeleccionada(vista.pacientesTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                if (utilidades.campoVacio(vista.campoNombrePaciente)) {
+                    utilidades.campoVacioAlerta(vista.campoNombrePaciente);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoPrimerApellidoPaciente)) {
+                    utilidades.campoVacioAlerta(vista.campoPrimerApellidoPaciente);
+                    break;
+                } else if(utilidades.fechaVacia(vista.fechaNacimientoPacienteDatePicker)) {
+                    utilidades.fechaVaciaAlerta();
+                    break;
+                } else if(!utilidades.fechaAnteriorAHoy(vista.fechaNacimientoPacienteDatePicker)) {
+                    utilidades.fechaAnteriorHoy();
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoPaciente)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else if (!utilidades.emailValido(vista.campoEmailPaciente)) {
+                    utilidades.emailErrorAlerta();
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxHospitalPaciente)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxHospitalPaciente);
+                    break;
+                } else {
+                    int fila = vista.pacientesTabla.getSelectedRow();
+                    int idPaciente = Integer.parseInt(vista.pacientesTabla.getValueAt(fila, 0).toString());
+
+                    Paciente paciente = vista.getPacienteFormulario(idPaciente);
+                    modelo.modificarPaciente(paciente);
+
+                    refrescarTabla(0);
+                    borrarCamposPacientes();
+                    cargarCombos();
+                }
+                break;
+            case "eliminarPaciente":
+                if (utilidades.noHayFilaSeleccionada(vista.pacientesTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                confirmacion = utilidades.eliminarConfirmacion();
+                if (confirmacion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+                int fila = vista.pacientesTabla.getSelectedRow();
+                int idPaciente = Integer.parseInt(vista.pacientesTabla.getValueAt(fila, 0).toString());
+
+                modelo.eliminarPaciente(idPaciente);
+
+                refrescarTabla(0);
+                borrarCamposPacientes();
+                cargarCombos();
+
+                break;
+            case "añadirDoctor":
+
+                if (utilidades.campoVacio(vista.campoNombreDoctor)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreDoctor);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoPrimerApellidoDoctor)) {
+                    utilidades.campoVacioAlerta(vista.campoPrimerApellidoDoctor);
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoDoctor)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else if (!utilidades.emailValido(vista.campoEmailDoctor)) {
+                    utilidades.emailErrorAlerta();
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxEspecialidadDoctor)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxEspecialidadDoctor);
+                    break;
+                } else if(utilidades.fechaVacia(vista.fechaContratacionDatePickerDoctor)) {
+                    utilidades.fechaVaciaAlerta();
+                    break;
+                } else if(!utilidades.fechaAnteriorAHoy(vista.fechaContratacionDatePickerDoctor)) {
+                    utilidades.fechaAnteriorHoy();
+                    break;
+                }  else {
+                    Doctor doctor = vista.getDoctorFormulario();
+                    modelo.insertarDoctor(doctor);
+                    refrescarTabla(1);
+                    borrarCamposDoctores();
+                    cargarCombos();
+                }
+                break;
+            case "modificarDoctor":
+                if (utilidades.noHayFilaSeleccionada(vista.doctoresTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                if (utilidades.campoVacio(vista.campoNombreDoctor)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreDoctor);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoPrimerApellidoDoctor)) {
+                    utilidades.campoVacioAlerta(vista.campoPrimerApellidoDoctor);
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoDoctor)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else if (!utilidades.emailValido(vista.campoEmailDoctor)) {
+                    utilidades.emailErrorAlerta();
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxEspecialidadDoctor)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxEspecialidadDoctor);
+                    break;
+                } else if(utilidades.fechaVacia(vista.fechaContratacionDatePickerDoctor)) {
+                    utilidades.fechaVaciaAlerta();
+                    break;
+                } else if(!utilidades.fechaAnteriorAHoy(vista.fechaContratacionDatePickerDoctor)) {
+                    utilidades.fechaAnteriorHoy();
+                    break;
+                } else {
+                    int filaDoctor = vista.doctoresTabla.getSelectedRow();
+                    int idDoctor = Integer.parseInt(vista.doctoresTabla.getValueAt(filaDoctor, 0).toString());
+                    Doctor doctor = vista.getDoctorFormulario(idDoctor);
+                    modelo.modificarDoctor(doctor);
+
+                    refrescarTabla(1);
+                    borrarCamposDoctores();
+                    cargarCombos();
+                }
+                break;
+            case "eliminarDoctor":
+
+                if (utilidades.noHayFilaSeleccionada(vista.doctoresTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                confirmacion = utilidades.eliminarConfirmacion();
+                if (confirmacion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+                int filaDoctorEliminar = vista.doctoresTabla.getSelectedRow();
+                int idDoctorEliminar = Integer.parseInt(vista.doctoresTabla.getValueAt(filaDoctorEliminar, 0).toString());
+                modelo.eliminarDoctor(idDoctorEliminar);
+
+                refrescarTabla(1);
+                borrarCamposDoctores();
+                cargarCombos();
+
+                break;
+            case "añadirHospital":
+                if (utilidades.campoVacio(vista.campoNombreHospital)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreHospital);
+                    break;
+                } else if(utilidades.errorSelecioneCombo(vista.comboBoxProvinciaHospital)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxProvinciaHospital);
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoHospital)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else {
+                    Hospital hospital = vista.getHospitalFormulario();
+                    modelo.insertarHospital(hospital);
+
+                    refrescarTabla(2);
+                    borrarCamposHospitales();
+                    cargarCombos();
+                }
+                break;
+            case "modificarHospital":
+                if (utilidades.noHayFilaSeleccionada(vista.hospitalesTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                if (utilidades.campoVacio(vista.campoNombreHospital)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreHospital);
+                    break;
+                } else if(utilidades.errorSelecioneCombo(vista.comboBoxProvinciaHospital)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxProvinciaHospital);
+                    break;
+                } else if (!utilidades.telefonoValido(vista.campoTelefonoHospital)) {
+                    utilidades.telefonoErrorAlerta();
+                    break;
+                } else {
+                    int filaHospital = vista.hospitalesTabla.getSelectedRow();
+                    int idHospital = Integer.parseInt(vista.hospitalesTabla.getValueAt(filaHospital, 0).toString());
+                    Hospital hospital = vista.getHospitalFormulario(idHospital);
+                    modelo.modificarHospital(hospital);
+
+                    refrescarTabla(2);
+                    borrarCamposHospitales();
+                    cargarCombos();
+                }
+                break;
+            case "eliminarHospital":
+                if (utilidades.noHayFilaSeleccionada(vista.hospitalesTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                confirmacion = utilidades.eliminarConfirmacion();
+                if (confirmacion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+                int filaHospitalEliminar = vista.hospitalesTabla.getSelectedRow();
+                int idHospitalEliminar = Integer.parseInt(vista.hospitalesTabla.getValueAt(filaHospitalEliminar, 0).toString());
+
+                modelo.eliminarHospital(idHospitalEliminar);
+
+                refrescarTabla(2);
+                borrarCamposHospitales();
+                cargarCombos();
+
+                break;
+            case "añadirCita":
+                if (utilidades.campoVacio(vista.campoMotivoCita)) {
+                    utilidades.campoVacioAlerta(vista.campoMotivoCita);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoDiagnosticoCita)) {
+                    utilidades.campoVacioAlerta(vista.campoDiagnosticoCita);
+                    break;
+                } else {
+                    modelo.insertarCita(vista.getCitaFormulario());
+                    refrescarTabla(3);
+                    borrarCamposCitas();
+                }
+                break;
+            case "modificarCita":
+                if (utilidades.noHayFilaSeleccionada(vista.citasTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+
+                if (utilidades.campoVacio(vista.campoMotivoCita)) {
+                    utilidades.campoVacioAlerta(vista.campoMotivoCita);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoDiagnosticoCita)) {
+                    utilidades.campoVacioAlerta(vista.campoDiagnosticoCita);
+                    break;
+                } else {
+                    int filaCita = vista.citasTabla.getSelectedRow();
+                    int idCita = Integer.parseInt(vista.citasTabla.getValueAt(filaCita, 0).toString());
+                    modelo.modificarCita(vista.getCitaFormulario(idCita));
+
+                    refrescarTabla(3);
+                    borrarCamposCitas();
+                }
+                break;
+            case "eliminarCita":
+                if (utilidades.noHayFilaSeleccionada(vista.citasTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                confirmacion = utilidades.eliminarConfirmacion();
+                if (confirmacion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+                int filaCitaEliminar = vista.citasTabla.getSelectedRow();
+                int idCitaEliminar = Integer.parseInt(
+                        vista.citasTabla.getValueAt(filaCitaEliminar, 0).toString()
+                );
+                modelo.eliminarCita(idCitaEliminar);
+
+                refrescarTabla(3);
+                borrarCamposCitas();
+                break;
+            case "añadirMedicamento":
+                if (utilidades.campoVacio(vista.campoNombreMedicamento)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreMedicamento);
+                    break;
+                } else if(utilidades.campoVacio(vista.campoDescripción)) {
+                    utilidades.campoVacioAlerta(vista.campoDescripción);
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxTipoMedicamento)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxTipoMedicamento);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoEfectosSecundarios)) {
+                    utilidades.campoVacioAlerta(vista.campoEfectosSecundarios);
+                    break;
+                } else {
+                    modelo.insertarMedicamento(vista.getMedicamentoFormulario());
+
+                    refrescarTabla(4);
+                    borrarCamposMedicamentos();
+                }
+                break;
+            case "modificarMedicamento":
+                if (utilidades.noHayFilaSeleccionada(vista.medicamentosTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                if (utilidades.campoVacio(vista.campoNombreMedicamento)) {
+                    utilidades.campoVacioAlerta(vista.campoNombreMedicamento);
+                    break;
+                } else if(utilidades.campoVacio(vista.campoDescripción)) {
+                    utilidades.campoVacioAlerta(vista.campoDescripción);
+                    break;
+                } else if (utilidades.errorSelecioneCombo(vista.comboBoxTipoMedicamento)) {
+                    utilidades.errorSeleccioneAlertaCombo(vista.comboBoxTipoMedicamento);
+                    break;
+                } else if (utilidades.campoVacio(vista.campoEfectosSecundarios)) {
+                    utilidades.campoVacioAlerta(vista.campoEfectosSecundarios);
+                    break;
+                } else {
+                    int filaMed = vista.medicamentosTabla.getSelectedRow();
+                    int idMed = Integer.parseInt(vista.medicamentosTabla.getValueAt(filaMed, 0).toString());
+                    modelo.modificarMedicamento(vista.getMedicamentoFormulario(idMed));
+
+                    refrescarTabla(4);
+                    borrarCamposMedicamentos();
+                }
+                break;
+            case "eliminarMedicamento":
+                if (utilidades.noHayFilaSeleccionada(vista.medicamentosTabla)) {
+                    utilidades.noHayFilaSeleccionadaAlerta();
+                    break;
+                }
+                confirmacion = utilidades.eliminarConfirmacion();
+                if (confirmacion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+                int filaMedEliminar = vista.medicamentosTabla.getSelectedRow();
+                int idMedEliminar = Integer.parseInt(
+                        vista.medicamentosTabla.getValueAt(filaMedEliminar, 0).toString()
+                );
+                modelo.eliminarMedicamento(idMedEliminar);
+
+                refrescarTabla(4);
+                borrarCamposMedicamentos();
+                break;
         }
     }
 
@@ -324,33 +684,20 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         try {
             switch (indice) {
                 case 0:
-                    vista.pacientesTabla.setModel(
-                            construirTableModel(modelo.consultarPaciente())
-                    );
+                    vista.pacientesTabla.setModel(construirTableModel(modelo.consultarPaciente()));
                     break;
-
                 case 1:
-                    vista.doctoresTabla.setModel(
-                            construirTableModel(modelo.consultarDoctor())
-                    );
+                    vista.doctoresTabla.setModel(construirTableModel(modelo.consultarDoctor()));
                     break;
-
                 case 2:
-                    vista.hospitalesTabla.setModel(
-                            construirTableModel(modelo.consultarHospital())
-                    );
+                    vista.hospitalesTabla.setModel(construirTableModel(modelo.consultarHospital()));
                     break;
-
                 case 3:
-                    vista.citasTabla.setModel(
-                            construirTableModel(modelo.consultarCita())
-                    );
+                    vista.fechaHoraCita.setDateTimeStrict(LocalDateTime.now());
+                    vista.citasTabla.setModel(construirTableModel(modelo.consultarCita()));
                     break;
-
                 case 4:
-                    vista.medicamentosTabla.setModel(
-                            construirTableModel(modelo.consultarMedicamento())
-                    );
+                    vista.medicamentosTabla.setModel(construirTableModel(modelo.consultarMedicamento()));
                     break;
             }
         } catch (SQLException ex) {
@@ -393,7 +740,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.campoEmailPaciente.setText("");
         vista.siRadioButtonFumadorPaciente.setSelected(false);
         vista.noRadioButtonFumadorPaciente.setSelected(false);
-        vista.comboBoxHospitalPaciente.setSelectedIndex(-1);
+        vista.comboBoxHospitalPaciente.setSelectedIndex(0);
     }
 
     private void borrarCamposDoctores() {
@@ -402,14 +749,14 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.campoSegundoApellidoDoctor.setText("");
         vista.campoTelefonoDoctor.setText("");
         vista.campoEmailDoctor.setText("");
-        vista.comboBoxEspecialidadDoctor.setSelectedIndex(-1);
+        vista.comboBoxEspecialidadDoctor.setSelectedIndex(0);
         vista.fechaContratacionDatePickerDoctor.clear();
         vista.comboBoxHospitalDoctor.setSelectedIndex(-1);
     }
 
     private void borrarCamposHospitales() {
         vista.campoNombreHospital.setText("");
-        vista.comboBoxProvinciaHospital.setSelectedIndex(-1);
+        vista.comboBoxProvinciaHospital.setSelectedIndex(0);
         vista.campoTelefonoHospital.setText("");
         vista.spinnerCapacidadHospital.setValue(0);
         vista.publicoRadioButton.setSelected(false);
@@ -419,7 +766,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
     private void borrarCamposCitas() {
         vista.comboBoxPacienteCita.setSelectedIndex(-1);
         vista.comboBoxDoctorCita.setSelectedIndex(-1);
-        vista.fechaHoraCita.clear();
+        vista.fechaHoraCita.setDateTimeStrict(LocalDateTime.now());
         vista.campoMotivoCita.setText("");
         vista.campoDiagnosticoCita.setText("");
         vista.comboBoxMedicamentoCita.setSelectedIndex(-1);
@@ -428,7 +775,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
     private void borrarCamposMedicamentos() {
         vista.campoNombreMedicamento.setText("");
         vista.campoDescripción.setText("");
-        vista.comboBoxTipoMedicamento.setSelectedIndex(-1);
+        vista.comboBoxTipoMedicamento.setSelectedIndex(0);
         vista.campoDosisMedicamento.setText("");
         vista.campoEfectosSecundarios.setText("");
     }

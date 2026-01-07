@@ -68,4 +68,10 @@ public class Medicamento {
     public void setEfectosSecundarios(String efectosSecundarios) {
         this.efectosSecundarios = efectosSecundarios;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

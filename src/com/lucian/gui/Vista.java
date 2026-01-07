@@ -13,6 +13,7 @@ import java.awt.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class Vista extends JFrame{
     private JPanel panel1;
@@ -100,6 +101,7 @@ public class Vista extends JFrame{
     public Vista() {
         super(TITULO_FRAME);
         initFrame();
+        initComponents();
     }
 
     public void initFrame() {
@@ -114,16 +116,26 @@ public class Vista extends JFrame{
         setTableModels();
     }
 
+    public void initComponents() {
+        masculinoRadioButtonPaciente.setSelected(true);
+        siRadioButtonFumadorPaciente.setSelected(true);
+        publicoRadioButton.setSelected(true);
+        SpinnerNumberModel capacidadHospital = new SpinnerNumberModel(100, 1, 10000, 50);
+        spinnerCapacidadHospital.setModel(capacidadHospital);
+        fechaHoraCita.setEnabled(false);
+    }
+
     private void setEnumComboBox() {
+        comboBoxEspecialidadDoctor.addItem("Seleccione");
+        comboBoxProvinciaHospital.addItem("Seleccione");
+        comboBoxTipoMedicamento.addItem("Seleccione");
         for (EspecialidadDoctor constant : EspecialidadDoctor.values()) {
                 comboBoxEspecialidadDoctor.addItem(constant.getValor());
             }
-
-            for (CiudadesHospital constant: CiudadesHospital.values()) {
+        for (CiudadesHospital constant: CiudadesHospital.values()) {
                 comboBoxProvinciaHospital.addItem(constant.getValor());
             }
-
-            for (TipoMedicamento constant : TipoMedicamento.values()) {
+        for (TipoMedicamento constant : TipoMedicamento.values()) {
                 comboBoxTipoMedicamento.addItem(constant.getValor());
         }
     }
@@ -310,4 +322,74 @@ public class Vista extends JFrame{
 
         return medicamento;
     }
+
+    public void cargarHospitalesCombo(ResultSet rs) {
+        try {
+            comboBoxHospitalPaciente.removeAllItems();
+            comboBoxHospitalDoctor.removeAllItems();
+
+            while (rs.next()) {
+                Hospital h = new Hospital();
+                h.setIdHospital(rs.getInt("id_hospital"));
+                h.setNombre(rs.getString("nombre"));
+
+                comboBoxHospitalPaciente.addItem(h);
+                comboBoxHospitalDoctor.addItem(h);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarPacientesCombo(ResultSet rs) {
+        try {
+            comboBoxPacienteCita.removeAllItems();
+
+            while (rs.next()) {
+                Paciente p = new Paciente();
+                p.setIdPaciente(rs.getInt("id_paciente"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrimerApellido(rs.getString("primer_apellido"));
+
+                comboBoxPacienteCita.addItem(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarDoctoresCombo(ResultSet rs) {
+        try {
+            comboBoxDoctorCita.removeAllItems();
+
+            while (rs.next()) {
+                Doctor d = new Doctor();
+                d.setIdDoctor(rs.getInt("id_doctor"));
+                d.setNombre(rs.getString("nombre"));
+                d.setPrimerApellido(rs.getString("primer_apellido"));
+
+                comboBoxDoctorCita.addItem(d);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarMedicamentosCombo(ResultSet rs) {
+        try {
+            comboBoxMedicamentoCita.removeAllItems();
+
+            while (rs.next()) {
+                Medicamento m = new Medicamento();
+                m.setIdMedicamento(rs.getInt("id_medicamento"));
+                m.setNombre(rs.getString("nombre"));
+
+                comboBoxMedicamentoCita.addItem(m);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
