@@ -613,5 +613,49 @@ public class Modelo {
         return false;
     }
 
+    public boolean existeEmailPaciente(String email) {
+        String sentenciaSql = "SELECT existeEmailPaciente(?)";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setString(1, email);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getBoolean(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean existeEmailDoctor(String email) {
+        String sentenciaSql = "SELECT existeEmailDoctor(?)";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setString(1, email);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getBoolean(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean existeNombreMedicamento(String nombre) {
+        String sentenciaSql = "SELECT existeNombreMedicamento(?)";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setString(1, nombre);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getBoolean(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

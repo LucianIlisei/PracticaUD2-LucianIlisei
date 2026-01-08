@@ -418,6 +418,13 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     break;
                 } else {
                     int fila = vista.pacientesTabla.getSelectedRow();
+
+                    String emailOriginal = vista.pacientesTabla.getValueAt(fila, 7).toString();
+                    String emailNuevo = vista.campoEmailPaciente.getText();
+                    if (modelo.existeEmailPaciente(emailNuevo) && !emailNuevo.equals(emailOriginal)) {
+                        utilidades.existeEmail();
+                        break;
+                    }
                     int idPaciente = Integer.parseInt(vista.pacientesTabla.getValueAt(fila, 0).toString());
 
                     Paciente paciente = vista.getPacienteFormulario(idPaciente);
@@ -515,6 +522,14 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     break;
                 } else {
                     int filaDoctor = vista.doctoresTabla.getSelectedRow();
+                    String emailOriginal = vista.doctoresTabla.getValueAt(filaDoctor, 5).toString();
+                    String emailNuevo = vista.campoEmailDoctor.getText();
+
+                    if (modelo.existeEmailDoctor(emailNuevo) && !emailNuevo.equals(emailOriginal)) {
+                        utilidades.existeEmail();
+                        break;
+                    }
+
                     int idDoctor = Integer.parseInt(vista.doctoresTabla.getValueAt(filaDoctor, 0).toString());
                     Doctor doctor = vista.getDoctorFormulario(idDoctor);
                     modelo.modificarDoctor(doctor);
@@ -723,7 +738,17 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     break;
                 } else {
                     int filaMed = vista.medicamentosTabla.getSelectedRow();
+
+                    String nombreOriginal = vista.medicamentosTabla.getValueAt(filaMed, 1).toString();
+                    String nombreNuevo = vista.campoNombreMedicamento.getText();
+
+                    if (modelo.existeNombreMedicamento(nombreNuevo) && !nombreNuevo.equals(nombreOriginal)) {
+                        utilidades.existeNombreMedicamento();
+                        break;
+                    }
+
                     int idMed = Integer.parseInt(vista.medicamentosTabla.getValueAt(filaMed, 0).toString());
+
                     modelo.modificarMedicamento(vista.getMedicamentoFormulario(idMed));
 
                     refrescarTabla(4);

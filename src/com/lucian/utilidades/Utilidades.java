@@ -80,4 +80,13 @@ public class Utilidades {
     public void hayFilaSeleccionadaAlerta() {
         JOptionPane.showMessageDialog(null, "No se puede añadir si hay una fila seleccionada, por favor deseleccione la tabla modificando, eliminando o cambiando de pestaña");
     }
+
+    public void existeEmail() {
+        JOptionPane.showMessageDialog(null, "El correo ya está en uso, pruebe con otro.");
+    }
+
+    public void existeNombreMedicamento() {
+        JOptionPane.showMessageDialog(null, "El nombre del medicamento ya está en uso, pruebe con otro.");
+    }
+
 }
