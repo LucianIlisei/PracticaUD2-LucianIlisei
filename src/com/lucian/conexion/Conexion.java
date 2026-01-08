@@ -93,6 +93,8 @@ public class Conexion {
             }
     }
 
+
+
     public void setPropValues(String ip, String user, String pass, String adminPass) {
         try {
             Properties prop = new Properties();

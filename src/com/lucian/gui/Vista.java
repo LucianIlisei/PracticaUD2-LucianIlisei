@@ -96,6 +96,17 @@ public class Vista extends JFrame{
     DefaultTableModel dtmCitas;
     DefaultTableModel dtmMedicamentos;
 
+    JLabel etiquetaEstado;
+    JMenuItem itemOpciones;
+    JMenuItem itemDesconectar;
+    JMenuItem itemSalir;
+    OptionDialog optionDialog;
+
+    //cuadro dialogo
+    JDialog adminPasswordDialog;
+    JButton btnValidate;
+    JPasswordField adminPassword;
+
     public Vista() {
         super(TITULO_FRAME);
         initFrame();
@@ -104,12 +115,13 @@ public class Vista extends JFrame{
 
     public void initFrame() {
         this.setContentPane(panel1);
-        //al clickar en cerrar no hace nada
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.pack();
         this.setSize(new Dimension(this.getWidth()+100,this.getHeight()));
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        setMenu();
+        setAdminDialog();
         setEnumComboBox();
         setTableModels();
         aplicarEstiloPacientes();
@@ -126,6 +138,38 @@ public class Vista extends JFrame{
         SpinnerNumberModel capacidadHospital = new SpinnerNumberModel(100, 1, 10000, 50);
         spinnerCapacidadHospital.setModel(capacidadHospital);
         fechaHoraCita.setEnabled(false);
+    }
+
+    private void setMenu() {
+        JMenuBar mbBar = new JMenuBar();
+        JMenu menu = new JMenu("Archivo");
+        itemOpciones = new JMenuItem("Opciones");
+        itemOpciones.setActionCommand("Opciones");
+        itemDesconectar=new JMenuItem("Desconectar");
+        itemDesconectar.setActionCommand("Desconectar");
+        itemSalir= new JMenuItem("Salir");
+        itemSalir.setActionCommand("Salir");
+        menu.add(itemOpciones);
+        menu.add(itemDesconectar);
+        menu.add(itemSalir);
+        mbBar.add(menu);
+        mbBar.add(Box.createHorizontalGlue());
+        this.setJMenuBar(mbBar);
+    }
+
+    private void setAdminDialog() {
+        btnValidate= new JButton("Validar");
+        btnValidate.setActionCommand("abrirOpciones");
+        adminPassword=new JPasswordField();
+        adminPassword.setPreferredSize(new Dimension(100,26));
+        Object[] options = new Object[] {adminPassword,btnValidate};
+        JOptionPane jop= new JOptionPane("Introduce la contraseña",
+                JOptionPane.WARNING_MESSAGE,JOptionPane.YES_NO_OPTION,null,options);
+        adminPasswordDialog=new JDialog(this,"Opciones",true);
+        adminPasswordDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        adminPasswordDialog.setContentPane(jop);
+        adminPasswordDialog.pack();
+        adminPasswordDialog.setLocationRelativeTo(this);
     }
 
     private void aplicarEstiloPacientes() {

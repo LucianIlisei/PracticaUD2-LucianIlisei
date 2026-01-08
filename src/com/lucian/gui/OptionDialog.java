@@ -1,60 +1,33 @@
 package com.lucian.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class OptionDialog extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    public JPanel contentPane;
+    public JTextField campoIp;
+    public JTextField campoUsuario;
+    public JPasswordField campoContraseña;
+    public JPasswordField campoContraseñaAdministrador;
+    public JButton btnGuardar;
+    public JButton buttonOK;
+    public JButton buttonCancel;
+    public JButton btnOpcionesGuardar;
+    public Frame owner;
 
-    public OptionDialog() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    public OptionDialog(Frame owner) {
+        super(owner, "Opciones", true);
+        this.owner = owner;
+        initDialog();
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
-    }
-
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        OptionDialog dialog = new OptionDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
+        private void initDialog() {
+            this.setContentPane(contentPane);
+            this.contentPane.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+            this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            this.pack();
+            this.setSize(new Dimension(this.getWidth()+200,this.getHeight()));
+            this.setLocationRelativeTo(owner);
+        }
 }

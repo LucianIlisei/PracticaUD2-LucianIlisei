@@ -31,12 +31,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         this.utilidades = utilidades;
         conexion.conectar();
         addActionListeners(this);
-
-        vista.tabbedPane1.addChangeListener(e -> {
-            int index = vista.tabbedPane1.getSelectedIndex();
-            refrescarTabla(index);
-        });
-
+        addWindowListeners(this);
         refrescarTodo();
         cargarCombos();
         iniciar();
@@ -96,11 +91,21 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.btnModificarMedicamento.setActionCommand("modificarMedicamento");
         vista.btnEliminarMedicamento.addActionListener(listener);
         vista.btnEliminarMedicamento.setActionCommand("eliminarMedicamento");
+
+        vista.optionDialog.btnOpcionesGuardar.addActionListener(listener);
+        vista.itemOpciones.addActionListener(listener);
+        vista.itemSalir.addActionListener(listener);
+        vista.itemDesconectar.addActionListener(listener);
+        vista.btnValidate.addActionListener(listener);
     }
 
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
 
     void iniciar() {
+        vista.tabbedPane1.addChangeListener(e -> {
+            int index = vista.tabbedPane1.getSelectedIndex();
+            refrescarTabla(index);
+        });
         try {
             vista.pacientesTabla.setModel(
                     construirTableModel(modelo.consultarPaciente())
@@ -321,6 +326,31 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         String command = e.getActionCommand();
         int confirmacion = 0;
         switch (command) {
+            case "Opciones":
+                vista.adminPasswordDialog.setVisible(true);
+                break;
+            case "Desconectar":
+                conexion.desconectar();
+                break;
+            case "Salir":
+                System.exit(0);
+                break;
+            case "abrirOpciones":
+                if(String.valueOf(vista.adminPassword.getPassword()).equals(conexion.getAdminPassword())) {
+                    vista.adminPassword.setText("");
+                    vista.adminPasswordDialog.dispose();
+                    vista.optionDialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La contraseña introducida no es correcta.");
+                }
+                break;
+            case "guardarOpciones":
+                conexion.setPropValues(vista.optionDialog.campoIp.getText(), vista.optionDialog.campoUsuario.getText(),
+                        String.valueOf(vista.optionDialog.campoContraseña.getPassword()), String.valueOf(vista.optionDialog.campoContraseñaAdministrador.getPassword()));
+                vista.optionDialog.dispose();
+                vista.dispose();
+                new Controlador(modelo, conexion, vista, utilidades);
+                break;
             case "desconectar":
                 conexion.desconectar();
                 break;
@@ -803,6 +833,13 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.campoEfectosSecundarios.setText("");
     }
 
+    private void setOptions() {
+        vista.optionDialog.campoIp.setText(conexion.getIp());
+        vista.optionDialog.campoUsuario.setText(conexion.getUser());
+        vista.optionDialog.campoContraseña.setText(conexion.getPassword());
+        vista.optionDialog.campoContraseñaAdministrador.setText(conexion.getAdminPassword());
+    }
+
     @Override
     public void itemStateChanged(ItemEvent e) {
 
@@ -814,9 +851,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
     }
 
     @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
+    public void windowClosing(WindowEvent e) { System.exit(0);}
 
     @Override
     public void windowClosed(WindowEvent e) {
