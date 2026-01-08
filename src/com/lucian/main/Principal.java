@@ -1,5 +1,6 @@
 package com.lucian.main;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import com.lucian.conexion.Conexion;
 import com.lucian.gui.Controlador;
 import com.lucian.gui.Modelo;
@@ -7,9 +8,11 @@ import com.lucian.gui.Vista;
 import com.lucian.utilidades.Utilidades;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Principal {
     public static void main(String[] args) {
+        FlatLightLaf.setup();
         Conexion conexion = new Conexion();
         Modelo modelo = new Modelo(conexion);
         Vista vista = new Vista();

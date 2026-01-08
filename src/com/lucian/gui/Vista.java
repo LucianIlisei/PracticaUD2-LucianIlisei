@@ -10,10 +10,8 @@ import com.lucian.base.enums.TipoMedicamento;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class Vista extends JFrame{
     private JPanel panel1;
@@ -88,7 +86,7 @@ public class Vista extends JFrame{
     JTextArea campoEfectosSecundarios;
     JButton btnAñadirMedicamento;
     JButton btnModificarMedicamento;
-    JButton btnElimiarMedicamento;
+    JButton btnEliminarMedicamento;
     JTable medicamentosTabla;
 
     // Tablas
@@ -114,6 +112,11 @@ public class Vista extends JFrame{
         this.setLocationRelativeTo(null);
         setEnumComboBox();
         setTableModels();
+        aplicarEstiloPacientes();
+        aplicarEstiloDoctores();
+        aplicarEstiloHospitales();
+        aplicarEstiloCitas();
+        aplicarEstiloMedicamentos();
     }
 
     public void initComponents() {
@@ -124,6 +127,121 @@ public class Vista extends JFrame{
         spinnerCapacidadHospital.setModel(capacidadHospital);
         fechaHoraCita.setEnabled(false);
     }
+
+    private void aplicarEstiloPacientes() {
+        getContentPane().setBackground(new Color(244, 246, 250));
+
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarBoton(btnAñadirPaciente, new Color(16, 185, 129));
+        estilizarBoton(btnModificarPaciente, new Color(249, 115, 22));
+        estilizarBoton(btnEliminarPaciente, new Color(220, 38, 38));
+
+        estilizarCampo(campoNombrePaciente);
+        estilizarCampo(campoPrimerApellidoPaciente);
+        estilizarCampo(campoSegundoApellidoPaciente);
+        estilizarCampo(campoTelefonoPaciente);
+        estilizarCampo(campoEmailPaciente);
+
+        pacientesTabla.setRowHeight(28);
+        pacientesTabla.setShowVerticalLines(false);
+        pacientesTabla.setShowHorizontalLines(false);
+        pacientesTabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        pacientesTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void aplicarEstiloDoctores() {
+        getContentPane().setBackground(new Color(244, 246, 250));
+
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarBoton(btnAñadirDoctor, new Color(16, 185, 129));
+        estilizarBoton(btnModificarDoctor, new Color(249, 115, 22));
+        estilizarBoton(btnEliminarDoctor, new Color(220, 38, 38));
+
+        estilizarCampo(campoNombrePaciente);
+        estilizarCampo(campoPrimerApellidoPaciente);
+        estilizarCampo(campoSegundoApellidoPaciente);
+        estilizarCampo(campoTelefonoDoctor);
+        estilizarCampo(campoEmailDoctor);
+
+        doctoresTabla.setRowHeight(28);
+        doctoresTabla.setShowVerticalLines(false);
+        doctoresTabla.setShowHorizontalLines(false);
+        doctoresTabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        doctoresTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void aplicarEstiloHospitales() {
+        getContentPane().setBackground(new Color(244, 246, 250));
+
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarBoton(btnAñadirHospital, new Color(16, 185, 129));
+        estilizarBoton(btnModificarHospital, new Color(249, 115, 22));
+        estilizarBoton(btnEliminarHospital, new Color(220, 38, 38));
+
+        estilizarCampo(campoNombreHospital);
+        estilizarCampo(campoTelefonoHospital);
+
+        hospitalesTabla.setRowHeight(28);
+        hospitalesTabla.setShowVerticalLines(false);
+        hospitalesTabla.setShowHorizontalLines(false);
+        hospitalesTabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        hospitalesTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void aplicarEstiloCitas() {
+        getContentPane().setBackground(new Color(244, 246, 250));
+
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarBoton(btnAñadirCita, new Color(16, 185, 129));
+        estilizarBoton(btnModificarCita, new Color(249, 115, 22));
+        estilizarBoton(btnEliminarCita, new Color(220, 38, 38));
+
+        estilizarCampo(campoMotivoCita);
+
+        citasTabla.setRowHeight(28);
+        citasTabla.setShowVerticalLines(false);
+        citasTabla.setShowHorizontalLines(false);
+        citasTabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        citasTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void aplicarEstiloMedicamentos() {
+        getContentPane().setBackground(new Color(244, 246, 250));
+
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarBoton(btnAñadirMedicamento, new Color(16, 185, 129));
+        estilizarBoton(btnModificarMedicamento, new Color(249, 115, 22));
+        estilizarBoton(btnEliminarMedicamento, new Color(220, 38, 38));
+
+        estilizarCampo(campoNombreMedicamento);
+        estilizarCampo(campoDescripción);
+        estilizarCampo(campoDosisMedicamento);
+
+        medicamentosTabla.setRowHeight(28);
+        medicamentosTabla.setShowVerticalLines(false);
+        medicamentosTabla.setShowHorizontalLines(false);
+        medicamentosTabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        medicamentosTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void estilizarBoton(JButton b, Color color) {
+        b.setBackground(color);
+        b.setForeground(Color.WHITE);
+        b.setFocusPainted(false);
+        b.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        b.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
+    private void estilizarCampo(JTextField campo) {
+        campo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        campo.putClientProperty("JComponent.roundRect", true);
+    }
+
 
     private void setEnumComboBox() {
         comboBoxEspecialidadDoctor.addItem("Seleccione");

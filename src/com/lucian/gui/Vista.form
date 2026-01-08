@@ -920,7 +920,6 @@
             <colspec value="left:4dlu:noGrow"/>
             <colspec value="fill:d:grow"/>
             <colspec value="left:300dlu:noGrow"/>
-            <colspec value="fill:max(d;4px):noGrow"/>
             <constraints>
               <tabbedpane title="Medicamento"/>
             </constraints>
@@ -1014,18 +1013,6 @@
                   <text value="Efectos secundarios"/>
                 </properties>
               </component>
-              <component id="75892" class="javax.swing.JTextArea" binding="campoEfectosSecundarios">
-                <constraints>
-                  <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
-                </constraints>
-                <properties>
-                  <background color="-13265764"/>
-                  <name value="EFECTOS SECUNDARIOS"/>
-                </properties>
-              </component>
               <component id="847da" class="javax.swing.JButton" binding="btnAñadirMedicamento">
                 <constraints>
                   <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -1044,7 +1031,7 @@
                   <text value="Modificar"/>
                 </properties>
               </component>
-              <component id="1fda9" class="javax.swing.JButton" binding="btnElimiarMedicamento">
+              <component id="1fda9" class="javax.swing.JButton" binding="btnEliminarMedicamento">
                 <constraints>
                   <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-vert="false"/>
@@ -1067,6 +1054,15 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="598c7" class="javax.swing.JTextArea" binding="campoEfectosSecundarios">
+                <constraints>
+                  <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
+                </constraints>
+                <properties/>
+              </component>
             </children>
           </grid>
         </children>

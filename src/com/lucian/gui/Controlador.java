@@ -94,8 +94,8 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.btnAñadirMedicamento.setActionCommand("añadirMedicamento");
         vista.btnModificarMedicamento.addActionListener(listener);
         vista.btnModificarMedicamento.setActionCommand("modificarMedicamento");
-        vista.btnElimiarMedicamento.addActionListener(listener);
-        vista.btnElimiarMedicamento.setActionCommand("eliminarMedicamento");
+        vista.btnEliminarMedicamento.addActionListener(listener);
+        vista.btnEliminarMedicamento.setActionCommand("eliminarMedicamento");
     }
 
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
