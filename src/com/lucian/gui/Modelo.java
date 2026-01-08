@@ -9,6 +9,7 @@ import java.sql.*;
 public class Modelo {
 
     private Conexion conexion;
+
     public Modelo(Conexion conexion) {
         this.conexion = conexion;
     }
@@ -433,16 +434,16 @@ public class Modelo {
 
     ResultSet consultarPaciente() throws SQLException {
         String sentenciaSql = "SELECT id_paciente AS 'ID', " +
-                        "nombre AS 'Nombre', " +
-                        "primer_apellido AS '1º Apellido', " +
-                        "segundo_apellido AS '2º Apellido', " +
-                        "fecha_nacimiento AS 'Fecha de nacimiento', " +
-                        "sexo AS 'Sexo', " +
-                        "telefono AS 'Teléfono', " +
-                        "email AS 'Email', " +
-                        "fumador AS 'Fumador', " +
-                        "id_hospital AS 'Hospital' " +
-                        "FROM pacientes";
+                "nombre AS 'Nombre', " +
+                "primer_apellido AS '1º Apellido', " +
+                "segundo_apellido AS '2º Apellido', " +
+                "fecha_nacimiento AS 'Fecha de nacimiento', " +
+                "sexo AS 'Sexo', " +
+                "telefono AS 'Teléfono', " +
+                "email AS 'Email', " +
+                "fumador AS 'Fumador', " +
+                "id_hospital AS 'Hospital' " +
+                "FROM pacientes";
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
@@ -452,15 +453,15 @@ public class Modelo {
 
     ResultSet consultarDoctor() throws SQLException {
         String sentenciaSql = "SELECT id_doctor AS 'ID', " +
-                        "nombre AS 'Nombre', " +
-                        "primer_apellido AS '1º Apellido', " +
-                        "segundo_apellido AS '2º Apellido', " +
-                        "telefono AS 'Teléfono', " +
-                        "email AS 'Email', " +
-                        "especialidad AS 'Especialidad', " +
-                        "fecha_contratacion AS 'Fecha contratación', " +
-                        "id_hospital AS 'Hospital' " +
-                        "FROM doctores";
+                "nombre AS 'Nombre', " +
+                "primer_apellido AS '1º Apellido', " +
+                "segundo_apellido AS '2º Apellido', " +
+                "telefono AS 'Teléfono', " +
+                "email AS 'Email', " +
+                "especialidad AS 'Especialidad', " +
+                "fecha_contratacion AS 'Fecha contratación', " +
+                "id_hospital AS 'Hospital' " +
+                "FROM doctores";
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
@@ -470,12 +471,12 @@ public class Modelo {
 
     ResultSet consultarHospital() throws SQLException {
         String sentenciaSql = "SELECT id_hospital AS 'ID', " +
-                        "nombre AS 'Nombre', " +
-                        "provincia AS 'Provincia', " +
-                        "telefono AS 'Teléfono', " +
-                        "capacidad AS 'Capacidad', " +
-                        "tipo AS 'Tipo' " +
-                        "FROM hospitales";
+                "nombre AS 'Nombre', " +
+                "provincia AS 'Provincia', " +
+                "telefono AS 'Teléfono', " +
+                "capacidad AS 'Capacidad', " +
+                "tipo AS 'Tipo' " +
+                "FROM hospitales";
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
@@ -503,12 +504,12 @@ public class Modelo {
 
     ResultSet consultarMedicamento() throws SQLException {
         String sentenciaSql = "SELECT id_medicamento AS 'ID', " +
-                        "nombre AS 'Nombre', " +
-                        "descripcion AS 'Descripción', " +
-                        "tipo AS 'Tipo', " +
-                        "dosis AS 'Dosis', " +
-                        "efectos_secundarios AS 'Efectos secundarios' " +
-                        "FROM medicamentos";
+                "nombre AS 'Nombre', " +
+                "descripcion AS 'Descripción', " +
+                "tipo AS 'Tipo', " +
+                "dosis AS 'Dosis', " +
+                "efectos_secundarios AS 'Efectos secundarios' " +
+                "FROM medicamentos";
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
@@ -538,6 +539,78 @@ public class Modelo {
         String sql = "SELECT id_medicamento, nombre FROM medicamentos";
         PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
         return ps.executeQuery();
+    }
+
+    public boolean pacienteEnUso(int paciente) {
+        String sentenciaSql = "SELECT COUNT(*) FROM citas WHERE id_paciente = ?";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setInt(1, paciente);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean doctorEnUso(int idDoctor) {
+        String sentenciaSql = "SELECT COUNT(*) FROM citas WHERE id_doctor = ?";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setInt(1, idDoctor);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public boolean hospitalEnUso(int idHospital) {
+        String sqlPacientes = "SELECT COUNT(*) FROM pacientes WHERE id_hospital = ?";
+        String sqlDoctores  = "SELECT COUNT(*) FROM doctores WHERE id_hospital = ?";
+        PreparedStatement sentencia1 = null;
+        PreparedStatement sentencia2 = null;
+        try {
+            sentencia1 = conexion.getConexion().prepareStatement(sqlPacientes);
+            sentencia1.setInt(1, idHospital);
+            ResultSet rs1 = sentencia1.executeQuery();
+            rs1.next();
+            if (rs1.getInt(1) > 0) {
+                return true;
+            }
+
+            sentencia2 = conexion.getConexion().prepareStatement(sqlDoctores);
+            sentencia2.setInt(1, idHospital);
+            ResultSet rs2 = sentencia2.executeQuery();
+            rs2.next();
+            return rs2.getInt(1) > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean medicamentoEnUso(int idMedicamento) {
+        String sentenciaSql = "SELECT COUNT(*) FROM citas WHERE id_medicamento = ?";
+        PreparedStatement sentencia = null;
+        try {
+            sentencia = conexion.getConexion().prepareStatement(sentenciaSql);
+            sentencia.setInt(1, idMedicamento);
+            ResultSet rs = sentencia.executeQuery();
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

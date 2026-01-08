@@ -433,12 +433,18 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     utilidades.noHayFilaSeleccionadaAlerta();
                     break;
                 }
+
+                int fila = vista.pacientesTabla.getSelectedRow();
+                int idPaciente = Integer.parseInt(vista.pacientesTabla.getValueAt(fila, 0).toString());
+                if (modelo.pacienteEnUso(idPaciente)) {
+                    JOptionPane.showMessageDialog(null, "No puede borrar el paciente si existe una cita con el");
+                    break;
+                }
+
                 confirmacion = utilidades.eliminarConfirmacion();
                 if (confirmacion != JOptionPane.YES_OPTION) {
                     break;
                 }
-                int fila = vista.pacientesTabla.getSelectedRow();
-                int idPaciente = Integer.parseInt(vista.pacientesTabla.getValueAt(fila, 0).toString());
 
                 modelo.eliminarPaciente(idPaciente);
 
@@ -519,18 +525,23 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 }
                 break;
             case "eliminarDoctor":
-
                 if (utilidades.noHayFilaSeleccionada(vista.doctoresTabla)) {
                     utilidades.noHayFilaSeleccionadaAlerta();
                     break;
                 }
+
+                int filaDoctor = vista.doctoresTabla.getSelectedRow();
+                int idDoctor = Integer.parseInt(vista.doctoresTabla.getValueAt(filaDoctor, 0).toString());
+                if (modelo.doctorEnUso(idDoctor)) {
+                    JOptionPane.showMessageDialog(null, "No puede borrar el doctor si existe una cita con el");
+                    break;
+                }
+
                 confirmacion = utilidades.eliminarConfirmacion();
                 if (confirmacion != JOptionPane.YES_OPTION) {
                     break;
                 }
-                int filaDoctorEliminar = vista.doctoresTabla.getSelectedRow();
-                int idDoctorEliminar = Integer.parseInt(vista.doctoresTabla.getValueAt(filaDoctorEliminar, 0).toString());
-                modelo.eliminarDoctor(idDoctorEliminar);
+                modelo.eliminarDoctor(idDoctor);
 
                 refrescarTabla(1);
                 borrarCamposDoctores();
@@ -590,14 +601,21 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     utilidades.noHayFilaSeleccionadaAlerta();
                     break;
                 }
+
+                int filaHospital = vista.hospitalesTabla.getSelectedRow();
+                int idHospital = Integer.parseInt(vista.hospitalesTabla.getValueAt(filaHospital, 0).toString());
+                if(modelo.hospitalEnUso(idHospital)) {
+                    JOptionPane.showMessageDialog(null, "No puede borrar un hospital si existe en pacientes o doctores.");
+                    break;
+                }
+
                 confirmacion = utilidades.eliminarConfirmacion();
                 if (confirmacion != JOptionPane.YES_OPTION) {
                     break;
                 }
-                int filaHospitalEliminar = vista.hospitalesTabla.getSelectedRow();
-                int idHospitalEliminar = Integer.parseInt(vista.hospitalesTabla.getValueAt(filaHospitalEliminar, 0).toString());
 
-                modelo.eliminarHospital(idHospitalEliminar);
+
+                modelo.eliminarHospital(idHospital);
 
                 refrescarTabla(2);
                 borrarCamposHospitales();
@@ -718,15 +736,20 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                     utilidades.noHayFilaSeleccionadaAlerta();
                     break;
                 }
+
+                int filaMedicamento = vista.medicamentosTabla.getSelectedRow();
+                int idMedicamento = Integer.parseInt(vista.medicamentosTabla.getValueAt(filaMedicamento, 0).toString());
+                if(modelo.medicamentoEnUso(idMedicamento)) {
+                    JOptionPane.showMessageDialog(null, "No puede eliminar un medicamento si esta en uso en una cita");
+                    break;
+                }
+
                 confirmacion = utilidades.eliminarConfirmacion();
                 if (confirmacion != JOptionPane.YES_OPTION) {
                     break;
                 }
-                int filaMedEliminar = vista.medicamentosTabla.getSelectedRow();
-                int idMedEliminar = Integer.parseInt(
-                        vista.medicamentosTabla.getValueAt(filaMedEliminar, 0).toString()
-                );
-                modelo.eliminarMedicamento(idMedEliminar);
+
+                modelo.eliminarMedicamento(idMedicamento);
 
                 refrescarTabla(4);
                 borrarCamposMedicamentos();

@@ -52,7 +52,7 @@ public class Utilidades {
     }
 
     public int eliminarConfirmacion() {
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres eliminar el paciente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas seguro?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         return confirmacion;
     }
 
