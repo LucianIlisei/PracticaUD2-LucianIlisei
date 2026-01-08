@@ -120,6 +120,7 @@ public class Vista extends JFrame{
         this.setSize(new Dimension(this.getWidth()+100,this.getHeight()));
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        optionDialog = new OptionDialog(this);
         setMenu();
         setAdminDialog();
         setEnumComboBox();
@@ -203,9 +204,9 @@ public class Vista extends JFrame{
         estilizarBoton(btnModificarDoctor, new Color(249, 115, 22));
         estilizarBoton(btnEliminarDoctor, new Color(220, 38, 38));
 
-        estilizarCampo(campoNombrePaciente);
-        estilizarCampo(campoPrimerApellidoPaciente);
-        estilizarCampo(campoSegundoApellidoPaciente);
+        estilizarCampo(campoNombreDoctor);
+        estilizarCampo(campoPrimerApellidoDoctor);
+        estilizarCampo(campoSegundoApellidoDoctor);
         estilizarCampo(campoTelefonoDoctor);
         estilizarCampo(campoEmailDoctor);
 

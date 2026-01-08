@@ -13,7 +13,6 @@ public class OptionDialog extends JDialog {
     public JButton btnGuardar;
     public JButton buttonOK;
     public JButton buttonCancel;
-    public JButton btnOpcionesGuardar;
     public Frame owner;
 
     public OptionDialog(Frame owner) {
