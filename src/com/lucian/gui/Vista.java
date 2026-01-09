@@ -103,11 +103,12 @@ public class Vista extends JFrame{
     JMenuItem itemSalir;
     OptionDialog optionDialog;
 
+    JButton btnBuscar;
+
     //cuadro dialogo
     JDialog adminPasswordDialog;
     JButton btnValidate;
     JPasswordField adminPassword;
-
 
     public Vista() {
         super(TITULO_FRAME);
@@ -160,8 +161,13 @@ public class Vista extends JFrame{
         menu.add(itemSalir);
         mbBar.add(menu);
         mbBar.add(Box.createHorizontalGlue());
+        btnBuscar = new JButton("Buscar");
+        btnBuscar.setActionCommand("Buscar");
+        estilizarBoton(btnBuscar, new Color(162, 114, 185));
+        mbBar.add(btnBuscar);
         this.setJMenuBar(mbBar);
     }
+
 
     private void setAdminDialog() {
         btnValidate= new JButton("Validar");

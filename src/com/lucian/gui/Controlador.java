@@ -100,6 +100,8 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.itemDesconectar.addActionListener(listener);
         vista.itemConectar.addActionListener(listener);
         vista.btnValidate.addActionListener(listener);
+
+        vista.btnBuscar.addActionListener(listener);
     }
 
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
@@ -359,6 +361,9 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 break;
             case "desconectar":
                 conexion.desconectar();
+                break;
+            case "Buscar":
+                JOptionPane.showMessageDialog(null,"Hola");
                 break;
             case "añadirPaciente":
                 if(utilidades.hayFilaseleccionada(vista.pacientesTabla)) {

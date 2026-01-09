@@ -7,9 +7,6 @@ import com.lucian.gui.Modelo;
 import com.lucian.gui.Vista;
 import com.lucian.utilidades.Utilidades;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Principal {
     public static void main(String[] args) {
         FlatLightLaf.setup();
