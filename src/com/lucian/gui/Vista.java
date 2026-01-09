@@ -99,6 +99,7 @@ public class Vista extends JFrame{
     JLabel etiquetaEstado;
     JMenuItem itemOpciones;
     JMenuItem itemDesconectar;
+    JMenuItem itemConectar;
     JMenuItem itemSalir;
     OptionDialog optionDialog;
 
@@ -106,6 +107,7 @@ public class Vista extends JFrame{
     JDialog adminPasswordDialog;
     JButton btnValidate;
     JPasswordField adminPassword;
+
 
     public Vista() {
         super(TITULO_FRAME);
@@ -148,10 +150,13 @@ public class Vista extends JFrame{
         itemOpciones.setActionCommand("Opciones");
         itemDesconectar=new JMenuItem("Desconectar");
         itemDesconectar.setActionCommand("Desconectar");
+        itemConectar = new JMenuItem("Conectar");
+        itemConectar.setActionCommand("Conectar");
         itemSalir= new JMenuItem("Salir");
         itemSalir.setActionCommand("Salir");
         menu.add(itemOpciones);
         menu.add(itemDesconectar);
+        menu.add(itemConectar);
         menu.add(itemSalir);
         mbBar.add(menu);
         mbBar.add(Box.createHorizontalGlue());

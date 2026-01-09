@@ -98,6 +98,7 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.itemOpciones.addActionListener(listener);
         vista.itemSalir.addActionListener(listener);
         vista.itemDesconectar.addActionListener(listener);
+        vista.itemConectar.addActionListener(listener);
         vista.btnValidate.addActionListener(listener);
     }
 
@@ -333,6 +334,9 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 break;
             case "Desconectar":
                 conexion.desconectar();
+                break;
+            case "Conectar":
+                conexion.conectar();
                 break;
             case "Salir":
                 System.exit(0);
