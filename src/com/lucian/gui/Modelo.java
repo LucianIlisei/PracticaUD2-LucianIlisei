@@ -657,4 +657,45 @@ public class Modelo {
             return false;
         }
     }
+
+    public ResultSet buscar(String tipo, String texto) throws SQLException {
+        String sql;
+
+        switch (tipo.toLowerCase()) {
+            case "paciente":
+                sql = "SELECT id_paciente AS 'ID', nombre AS 'Nombre', primer_apellido AS '1º Apellido', " +
+                        "segundo_apellido AS '2º Apellido', fecha_nacimiento AS 'Fecha de nacimiento', " +
+                        "sexo AS 'Sexo', telefono AS 'Teléfono', email AS 'Email', fumador AS 'Fumador', " +
+                        "id_hospital AS 'Hospital' FROM pacientes WHERE nombre LIKE ?";
+                break;
+
+            case "doctor":
+                sql = "SELECT id_doctor AS 'ID', nombre AS 'Nombre', primer_apellido AS '1º Apellido', " +
+                        "segundo_apellido AS '2º Apellido', telefono AS 'Teléfono', email AS 'Email', " +
+                        "especialidad AS 'Especialidad', fecha_contratacion AS 'Fecha contratación', " +
+                        "id_hospital AS 'Hospital' FROM doctores WHERE nombre LIKE ?";
+                break;
+
+            case "hospital":
+                sql = "SELECT id_hospital AS 'ID', nombre AS 'Nombre', provincia AS 'Provincia', " +
+                        "telefono AS 'Teléfono', capacidad AS 'Capacidad', tipo AS 'Tipo' " +
+                        "FROM hospitales WHERE nombre LIKE ?";
+                break;
+
+            case "medicamento":
+                sql = "SELECT id_medicamento AS 'ID', nombre AS 'Nombre', descripcion AS 'Descripción', " +
+                        "tipo AS 'Tipo', dosis AS 'Dosis', efectos_secundarios AS 'Efectos secundarios' " +
+                        "FROM medicamentos WHERE nombre LIKE ?";
+                break;
+
+            default:
+                throw new IllegalArgumentException("Tipo de búsqueda no válido");
+        }
+
+        PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
+        ps.setString(1, "%" + texto + "%");
+        return ps.executeQuery();
+    }
+
+
 }

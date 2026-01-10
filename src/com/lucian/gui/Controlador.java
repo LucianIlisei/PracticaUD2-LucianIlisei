@@ -102,6 +102,8 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.btnValidate.addActionListener(listener);
 
         vista.btnBuscar.addActionListener(listener);
+        vista.optionDialogBuscar.btnBuscar.addActionListener(listener);
+        vista.optionDialogBuscar.btnBuscar.setActionCommand("buscarConsulta");
     }
 
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
@@ -363,7 +365,15 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 conexion.desconectar();
                 break;
             case "Buscar":
-                JOptionPane.showMessageDialog(null,"Hola");
+                vista.optionDialogBuscar.setVisible(true);
+                break;
+            case "buscarConsulta":
+                if(utilidades.campoVacio(vista.optionDialogBuscar.campoBuscar)) {
+                    utilidades.campoVacioAlerta(vista.optionDialogBuscar.campoBuscar);
+                    break;
+                }
+                ejecutarBusqueda();
+                refrescarTabla(0);
                 break;
             case "añadirPaciente":
                 if(utilidades.hayFilaseleccionada(vista.pacientesTabla)) {
@@ -898,6 +908,45 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.optionDialog.campoContraseña.setText(conexion.getPassword());
         vista.optionDialog.campoContraseñaAdministrador.setText(conexion.getAdminPassword());
     }
+
+    private void ejecutarBusqueda() {
+        try {
+            String texto = vista.optionDialogBuscar.campoBuscar.getText();
+            String tipo = vista.optionDialogBuscar.comboBoxBuscar.getSelectedItem().toString();
+
+            ResultSet resultado = null;
+
+            switch (tipo) {
+                case "Paciente":
+                    resultado = modelo.buscar("paciente", texto);
+                    vista.pacientesTabla.setModel(construirTableModel(resultado));
+                    vista.tabbedPane1.setSelectedIndex(0);
+                    break;
+
+                case "Doctor":
+                    resultado = modelo.buscar("doctor", texto);
+                    vista.doctoresTabla.setModel(construirTableModel(resultado));
+                    vista.tabbedPane1.setSelectedIndex(1);
+                    break;
+
+                case "Hospital":
+                    resultado = modelo.buscar("hospital", texto);
+                    vista.hospitalesTabla.setModel(construirTableModel(resultado));
+                    vista.tabbedPane1.setSelectedIndex(2);
+                    break;
+
+                case "Medicamento":
+                    resultado = modelo.buscar("medicamento", texto);
+                    vista.medicamentosTabla.setModel(construirTableModel(resultado));
+                    vista.tabbedPane1.setSelectedIndex(4);
+                    break;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void itemStateChanged(ItemEvent e) {

@@ -103,6 +103,7 @@ public class Vista extends JFrame{
     JMenuItem itemSalir;
     OptionDialog optionDialog;
 
+    OptionDialogBuscar optionDialogBuscar;
     JButton btnBuscar;
 
     //cuadro dialogo
@@ -123,7 +124,6 @@ public class Vista extends JFrame{
         this.setSize(new Dimension(this.getWidth()+100,this.getHeight()));
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        optionDialog = new OptionDialog(this);
         setMenu();
         setAdminDialog();
         setEnumComboBox();
@@ -142,6 +142,8 @@ public class Vista extends JFrame{
         SpinnerNumberModel capacidadHospital = new SpinnerNumberModel(100, 1, 10000, 50);
         spinnerCapacidadHospital.setModel(capacidadHospital);
         fechaHoraCita.setEnabled(false);
+        optionDialog = new OptionDialog(this);
+        optionDialogBuscar = new OptionDialogBuscar(this);
     }
 
     private void setMenu() {
