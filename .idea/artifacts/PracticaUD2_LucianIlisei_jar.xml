@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PracticaUD2-LucianIlisei:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PracticaUD2_LucianIlisei_jar</output-path>
+    <root id="archive" name="PracticaUD2-LucianIlisei.jar">
+      <element id="module-output" name="PracticaUD2-LucianIlisei" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/mysql-connector-java-5.1.44-bin.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/flatlaf-demo-3.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jgoodies-common-1.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jgoodies-forms-1.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/LGoodDatePicker-11.2.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

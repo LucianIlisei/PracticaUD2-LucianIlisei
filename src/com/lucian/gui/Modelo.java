@@ -2,9 +2,10 @@ package com.lucian.gui;
 
 import com.lucian.base.entidades.*;
 import com.lucian.conexion.Conexion;
-import com.lucian.utilidades.Utilidades;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Modelo {
 
@@ -693,9 +694,61 @@ public class Modelo {
         }
 
         PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
-        ps.setString(1, texto);
+        ps.setString(1, "%" + texto + "%");
         return ps.executeQuery();
     }
 
+    public List<Hospital> obtenerHospitales() throws SQLException {
+        List<Hospital> lista = new ArrayList<>();
+        ResultSet rs = consultarHospitalesCombo();
 
+        while (rs.next()) {
+            Hospital hospital = new Hospital();
+            hospital.setIdHospital(rs.getInt("id_hospital"));
+            hospital.setNombre(rs.getString("nombre"));
+            lista.add(hospital);
+        }
+        return lista;
+    }
+
+    public List<Paciente> obtenerPacientes() throws SQLException {
+        List<Paciente> lista = new ArrayList<>();
+        ResultSet rs = consultarPacientesCombo();
+
+        while (rs.next()) {
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(rs.getInt("id_paciente"));
+            paciente.setNombre(rs.getString("nombre"));
+            paciente.setPrimerApellido(rs.getString("primer_apellido"));
+            lista.add(paciente);
+        }
+        return lista;
+    }
+
+    public List<Doctor> obtenerDoctores() throws SQLException {
+        List<Doctor> lista = new ArrayList<>();
+        ResultSet rs = consultarDoctoresCombo();
+
+        while (rs.next()) {
+            Doctor doctor = new Doctor();
+            doctor.setIdDoctor(rs.getInt("id_doctor"));
+            doctor.setNombre(rs.getString("nombre"));
+            doctor.setPrimerApellido(rs.getString("primer_apellido"));
+            lista.add(doctor);
+        }
+        return lista;
+    }
+
+    public List<Medicamento> obtenerMedicamentos() throws SQLException {
+        List<Medicamento> lista = new ArrayList<>();
+        ResultSet rs = consultarMedicamentosCombo();
+
+        while (rs.next()) {
+            Medicamento medicamento = new Medicamento();
+            medicamento.setIdMedicamento(rs.getInt("id_medicamento"));
+            medicamento.setNombre(rs.getString("nombre"));
+            lista.add(medicamento);
+        }
+        return lista;
+    }
 }

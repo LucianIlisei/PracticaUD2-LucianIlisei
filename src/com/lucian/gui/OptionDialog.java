@@ -11,8 +11,6 @@ public class OptionDialog extends JDialog {
     public JPasswordField campoContraseña;
     public JPasswordField campoContraseñaAdministrador;
     public JButton btnGuardar;
-    public JButton buttonOK;
-    public JButton buttonCancel;
     public Frame owner;
 
     public OptionDialog(Frame owner) {

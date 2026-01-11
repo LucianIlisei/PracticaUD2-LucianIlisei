@@ -12,6 +12,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,10 +49,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
 
     public void cargarCombos() {
         try {
-            vista.cargarHospitalesCombo(modelo.consultarHospitalesCombo());
-            vista.cargarPacientesCombo(modelo.consultarPacientesCombo());
-            vista.cargarDoctoresCombo(modelo.consultarDoctoresCombo());
-            vista.cargarMedicamentosCombo(modelo.consultarMedicamentosCombo());
+            vista.cargarHospitalesCombo(modelo.obtenerHospitales());
+            vista.cargarPacientesCombo(modelo.obtenerPacientes());
+            vista.cargarDoctoresCombo(modelo.obtenerDoctores());
+            vista.cargarMedicamentosCombo(modelo.obtenerMedicamentos());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,6 +106,8 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         vista.btnBuscar.addActionListener(listener);
         vista.optionDialogBuscar.btnBuscar.addActionListener(listener);
         vista.optionDialogBuscar.btnBuscar.setActionCommand("buscarConsulta");
+        vista.optionDialogBuscar.btnExportar.addActionListener(listener);
+        vista.optionDialogBuscar.btnExportar.setActionCommand("exportarBusqueda");
     }
 
     private void addWindowListeners(WindowListener listener) { vista.addWindowListener(listener); }
@@ -374,6 +378,10 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
                 }
                 ejecutarBusqueda();
                 refrescarTabla(0);
+                vista.optionDialogBuscar.campoBuscar.setText("");
+                break;
+            case "exportarBusqueda":
+                exportarTablaBusqueda();
                 break;
             case "añadirPaciente":
                 if(utilidades.hayFilaseleccionada(vista.pacientesTabla)) {
@@ -943,7 +951,43 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
         }
     }
 
+    private void exportarTablaBusqueda() {
+        JTable tabla = vista.optionDialogBuscar.table1;
 
+        if (tabla.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(vista, "No hay datos para exportar.");
+            return;
+        }
+
+        JFileChooser chooser = new JFileChooser();
+        if (chooser.showSaveDialog(vista) != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        File file = chooser.getSelectedFile();
+        try (FileWriter writer = new FileWriter(file)) {
+            for (int col = 0; col < tabla.getColumnCount(); col++) {
+                writer.write(tabla.getColumnName(col) + " | ");
+            }
+            writer.write("\n");
+
+            for (int row = 0; row < tabla.getRowCount(); row++) {
+                for (int col = 0; col < tabla.getColumnCount(); col++) {
+                    Object valor = tabla.getValueAt(row, col);
+                    if (valor == null) {
+                        writer.write(" | ");
+                    } else {
+                        writer.write(valor.toString() + " | ");
+                    }
+
+                }
+                writer.write("\n");
+            }
+            JOptionPane.showMessageDialog(vista, "Exportación completada.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, "Error al exportar archivo.");
+            e.printStackTrace();
+        }
+    }
     @Override
     public void itemStateChanged(ItemEvent e) {
 

@@ -10,13 +10,12 @@ import com.lucian.base.enums.TipoMedicamento;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-public class Vista extends JFrame{
+public class Vista extends JFrame {
     private JPanel panel1;
     public JTabbedPane tabbedPane1;
-    private final static String TITULO_FRAME="Aplicacion hospital";
+    private final static String TITULO_FRAME = "Aplicacion hospital";
 
     // Paciente
     JPanel PanelMedicamento;
@@ -121,7 +120,7 @@ public class Vista extends JFrame{
         this.setContentPane(panel1);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.pack();
-        this.setSize(new Dimension(this.getWidth()+100,this.getHeight()));
+        this.setSize(new Dimension(this.getWidth() + 100, this.getHeight()));
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         setMenu();
@@ -151,11 +150,11 @@ public class Vista extends JFrame{
         JMenu menu = new JMenu("Archivo");
         itemOpciones = new JMenuItem("Opciones");
         itemOpciones.setActionCommand("Opciones");
-        itemDesconectar=new JMenuItem("Desconectar");
+        itemDesconectar = new JMenuItem("Desconectar");
         itemDesconectar.setActionCommand("Desconectar");
         itemConectar = new JMenuItem("Conectar");
         itemConectar.setActionCommand("Conectar");
-        itemSalir= new JMenuItem("Salir");
+        itemSalir = new JMenuItem("Salir");
         itemSalir.setActionCommand("Salir");
         menu.add(itemOpciones);
         menu.add(itemDesconectar);
@@ -172,14 +171,14 @@ public class Vista extends JFrame{
 
 
     private void setAdminDialog() {
-        btnValidate= new JButton("Validar");
+        btnValidate = new JButton("Validar");
         btnValidate.setActionCommand("abrirOpciones");
-        adminPassword=new JPasswordField();
-        adminPassword.setPreferredSize(new Dimension(100,26));
-        Object[] options = new Object[] {adminPassword,btnValidate};
-        JOptionPane jop= new JOptionPane("Introduce la contraseña",
-                JOptionPane.WARNING_MESSAGE,JOptionPane.YES_NO_OPTION,null,options);
-        adminPasswordDialog=new JDialog(this,"Opciones",true);
+        adminPassword = new JPasswordField();
+        adminPassword.setPreferredSize(new Dimension(100, 26));
+        Object[] options = new Object[]{adminPassword, btnValidate};
+        JOptionPane jop = new JOptionPane("Introduce la contraseña",
+                JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION, null, options);
+        adminPasswordDialog = new JDialog(this, "Opciones", true);
         adminPasswordDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         adminPasswordDialog.setContentPane(jop);
         adminPasswordDialog.pack();
@@ -306,13 +305,13 @@ public class Vista extends JFrame{
         comboBoxProvinciaHospital.addItem("Seleccione");
         comboBoxTipoMedicamento.addItem("Seleccione");
         for (EspecialidadDoctor constant : EspecialidadDoctor.values()) {
-                comboBoxEspecialidadDoctor.addItem(constant.getValor());
-            }
-        for (CiudadesHospital constant: CiudadesHospital.values()) {
-                comboBoxProvinciaHospital.addItem(constant.getValor());
-            }
+            comboBoxEspecialidadDoctor.addItem(constant.getValor());
+        }
+        for (CiudadesHospital constant : CiudadesHospital.values()) {
+            comboBoxProvinciaHospital.addItem(constant.getValor());
+        }
         for (TipoMedicamento constant : TipoMedicamento.values()) {
-                comboBoxTipoMedicamento.addItem(constant.getValor());
+            comboBoxTipoMedicamento.addItem(constant.getValor());
         }
     }
 
@@ -392,6 +391,7 @@ public class Vista extends JFrame{
 
         return doctor;
     }
+
     public Doctor getDoctorFormulario(int idDoctor) {
         Doctor doctor = new Doctor();
 
@@ -499,73 +499,35 @@ public class Vista extends JFrame{
         return medicamento;
     }
 
-    public void cargarHospitalesCombo(ResultSet rs) {
-        try {
-            comboBoxHospitalPaciente.removeAllItems();
-            comboBoxHospitalDoctor.removeAllItems();
+    public void cargarHospitalesCombo(List<Hospital> lista) {
+        comboBoxHospitalPaciente.removeAllItems();
+        comboBoxHospitalDoctor.removeAllItems();
 
-            while (rs.next()) {
-                Hospital h = new Hospital();
-                h.setIdHospital(rs.getInt("id_hospital"));
-                h.setNombre(rs.getString("nombre"));
-
-                comboBoxHospitalPaciente.addItem(h);
-                comboBoxHospitalDoctor.addItem(h);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (Hospital h : lista) {
+            comboBoxHospitalPaciente.addItem(h);
+            comboBoxHospitalDoctor.addItem(h);
         }
     }
 
-    public void cargarPacientesCombo(ResultSet rs) {
-        try {
-            comboBoxPacienteCita.removeAllItems();
-
-            while (rs.next()) {
-                Paciente p = new Paciente();
-                p.setIdPaciente(rs.getInt("id_paciente"));
-                p.setNombre(rs.getString("nombre"));
-                p.setPrimerApellido(rs.getString("primer_apellido"));
-
-                comboBoxPacienteCita.addItem(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void cargarPacientesCombo(List<Paciente> lista) {
+        comboBoxPacienteCita.removeAllItems();
+        for (Paciente p : lista) {
+            comboBoxPacienteCita.addItem(p);
         }
     }
 
-    public void cargarDoctoresCombo(ResultSet rs) {
-        try {
-            comboBoxDoctorCita.removeAllItems();
-
-            while (rs.next()) {
-                Doctor d = new Doctor();
-                d.setIdDoctor(rs.getInt("id_doctor"));
-                d.setNombre(rs.getString("nombre"));
-                d.setPrimerApellido(rs.getString("primer_apellido"));
-
-                comboBoxDoctorCita.addItem(d);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void cargarDoctoresCombo(List<Doctor> lista) {
+        comboBoxDoctorCita.removeAllItems();
+        for (Doctor d : lista) {
+            comboBoxDoctorCita.addItem(d);
         }
     }
 
-    public void cargarMedicamentosCombo(ResultSet rs) {
-        try {
-            comboBoxMedicamentoCita.removeAllItems();
-
-            while (rs.next()) {
-                Medicamento m = new Medicamento();
-                m.setIdMedicamento(rs.getInt("id_medicamento"));
-                m.setNombre(rs.getString("nombre"));
-
-                comboBoxMedicamentoCita.addItem(m);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void cargarMedicamentosCombo(List<Medicamento> lista) {
+        comboBoxMedicamentoCita.removeAllItems();
+        for (Medicamento m : lista) {
+            comboBoxMedicamentoCita.addItem(m);
         }
     }
-
 
 }

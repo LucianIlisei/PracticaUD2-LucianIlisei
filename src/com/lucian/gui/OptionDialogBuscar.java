@@ -11,8 +11,7 @@ public class OptionDialogBuscar extends JDialog {
     public JButton btnBuscar;
     public JTextField campoBuscar;
     public JTable table1;
-    public JButton buttonOK;
-    public JButton buttonCancel;
+    public JButton btnExportar;
     public Frame owner;
     DefaultTableModel dtmBusqueda;
 
@@ -29,7 +28,6 @@ public class OptionDialogBuscar extends JDialog {
         this.pack();
         this.setSize(new Dimension(this.getWidth()+200,this.getHeight()));
         this.setLocationRelativeTo(owner);
-
         cargarComboBoxBuscar();
         setTableModels();
         aplicarEstilo();
@@ -42,6 +40,7 @@ public class OptionDialogBuscar extends JDialog {
 
         estilizarCampo(campoBuscar);
         estilizarBoton(btnBuscar, new Color(162, 114, 185));
+        estilizarBoton(btnExportar, new Color(66, 185, 43));
 
         table1.setRowHeight(28);
         table1.setShowVerticalLines(false);
