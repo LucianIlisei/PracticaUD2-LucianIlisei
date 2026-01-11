@@ -917,28 +917,24 @@ public class Controlador implements ActionListener, ItemListener, ListSelectionL
             ResultSet resultado = null;
 
             switch (tipo) {
-                case "Paciente":
-                    resultado = modelo.buscar("paciente", texto);
-                    vista.pacientesTabla.setModel(construirTableModel(resultado));
-                    vista.tabbedPane1.setSelectedIndex(0);
+                case "Pacientes":
+                    resultado = modelo.buscar("pacientes", texto);
+                    vista.optionDialogBuscar.table1.setModel(construirTableModel(resultado));
                     break;
 
-                case "Doctor":
-                    resultado = modelo.buscar("doctor", texto);
-                    vista.doctoresTabla.setModel(construirTableModel(resultado));
-                    vista.tabbedPane1.setSelectedIndex(1);
+                case "Doctores":
+                    resultado = modelo.buscar("doctores", texto);
+                    vista.optionDialogBuscar.table1.setModel(construirTableModel(resultado));
                     break;
 
-                case "Hospital":
-                    resultado = modelo.buscar("hospital", texto);
-                    vista.hospitalesTabla.setModel(construirTableModel(resultado));
-                    vista.tabbedPane1.setSelectedIndex(2);
+                case "Hospitales":
+                    resultado = modelo.buscar("hospitales", texto);
+                    vista.optionDialogBuscar.table1.setModel(construirTableModel(resultado));
                     break;
 
-                case "Medicamento":
-                    resultado = modelo.buscar("medicamento", texto);
-                    vista.medicamentosTabla.setModel(construirTableModel(resultado));
-                    vista.tabbedPane1.setSelectedIndex(4);
+                case "Medicamentos":
+                    resultado = modelo.buscar("medicamentos", texto);
+                    vista.optionDialogBuscar.table1.setModel(construirTableModel(resultado));
                     break;
             }
 

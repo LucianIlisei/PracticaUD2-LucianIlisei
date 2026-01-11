@@ -662,27 +662,27 @@ public class Modelo {
         String sql;
 
         switch (tipo.toLowerCase()) {
-            case "paciente":
+            case "pacientes":
                 sql = "SELECT id_paciente AS 'ID', nombre AS 'Nombre', primer_apellido AS '1º Apellido', " +
                         "segundo_apellido AS '2º Apellido', fecha_nacimiento AS 'Fecha de nacimiento', " +
                         "sexo AS 'Sexo', telefono AS 'Teléfono', email AS 'Email', fumador AS 'Fumador', " +
                         "id_hospital AS 'Hospital' FROM pacientes WHERE nombre LIKE ?";
                 break;
 
-            case "doctor":
+            case "doctores":
                 sql = "SELECT id_doctor AS 'ID', nombre AS 'Nombre', primer_apellido AS '1º Apellido', " +
                         "segundo_apellido AS '2º Apellido', telefono AS 'Teléfono', email AS 'Email', " +
                         "especialidad AS 'Especialidad', fecha_contratacion AS 'Fecha contratación', " +
                         "id_hospital AS 'Hospital' FROM doctores WHERE nombre LIKE ?";
                 break;
 
-            case "hospital":
+            case "hospitales":
                 sql = "SELECT id_hospital AS 'ID', nombre AS 'Nombre', provincia AS 'Provincia', " +
                         "telefono AS 'Teléfono', capacidad AS 'Capacidad', tipo AS 'Tipo' " +
                         "FROM hospitales WHERE nombre LIKE ?";
                 break;
 
-            case "medicamento":
+            case "medicamentos":
                 sql = "SELECT id_medicamento AS 'ID', nombre AS 'Nombre', descripcion AS 'Descripción', " +
                         "tipo AS 'Tipo', dosis AS 'Dosis', efectos_secundarios AS 'Efectos secundarios' " +
                         "FROM medicamentos WHERE nombre LIKE ?";
@@ -693,7 +693,7 @@ public class Modelo {
         }
 
         PreparedStatement ps = conexion.getConexion().prepareStatement(sql);
-        ps.setString(1, "%" + texto + "%");
+        ps.setString(1, texto);
         return ps.executeQuery();
     }
 

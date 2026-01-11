@@ -1,6 +1,7 @@
 package com.lucian.gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -13,6 +14,7 @@ public class OptionDialogBuscar extends JDialog {
     public JButton buttonOK;
     public JButton buttonCancel;
     public Frame owner;
+    DefaultTableModel dtmBusqueda;
 
     public OptionDialogBuscar(Frame owner) {
         super(owner, "Buscar", true);
@@ -27,7 +29,38 @@ public class OptionDialogBuscar extends JDialog {
         this.pack();
         this.setSize(new Dimension(this.getWidth()+200,this.getHeight()));
         this.setLocationRelativeTo(owner);
+
         cargarComboBoxBuscar();
+        setTableModels();
+        aplicarEstilo();
+    }
+
+    private void aplicarEstilo() {
+
+        contentPane.setBackground(new Color(244, 246, 250));
+        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 13));
+
+        estilizarCampo(campoBuscar);
+        estilizarBoton(btnBuscar, new Color(162, 114, 185));
+
+        table1.setRowHeight(28);
+        table1.setShowVerticalLines(false);
+        table1.setShowHorizontalLines(false);
+        table1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        table1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+    }
+
+    private void estilizarBoton(JButton b, Color color) {
+        b.setBackground(color);
+        b.setForeground(Color.WHITE);
+        b.setFocusPainted(false);
+        b.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        b.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
+    private void estilizarCampo(JTextField campo) {
+        campo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        campo.putClientProperty("JComponent.roundRect", true);
     }
 
     public void cargarComboBoxBuscar() {
@@ -36,4 +69,10 @@ public class OptionDialogBuscar extends JDialog {
             comboBoxBuscar.addItem(dato);
         }
     }
+
+    private void setTableModels() {
+        this.dtmBusqueda = new DefaultTableModel();
+        this.table1.setModel(dtmBusqueda);
+    }
+
 }
